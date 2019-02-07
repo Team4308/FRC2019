@@ -7,10 +7,12 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import frc.robot.auto.Auto;
 import frc.robot.subsystems.Drivetrain;
 
 /**
@@ -23,11 +25,10 @@ import frc.robot.subsystems.Drivetrain;
 public class Robot extends TimedRobot {
   public static Drivetrain drive;
   public static OI oi;
-
-  private static final String kDefaultAuto = "Default";
-  private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
-  private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  public static Auto auto;
+  public static Logger logger;
+  public static PowerDistributionPanel pdp;
+  public static Compressor compressor;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -35,12 +36,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+
+		pdp = new PowerDistributionPanel(RobotMap.PDP_ID);
+    LiveWindow.disableAllTelemetry();
+
+    compressor = new Compressor(RobotMap.PCM_ID);
+    
     oi = new OI();
     drive = new Drivetrain();
-
-    m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-    m_chooser.addOption("My Auto", kCustomAuto);
-    SmartDashboard.putData("Auto choices", m_chooser);
+    auto = new Auto();
+    logger = new Logger();
   }
 
   /**
@@ -53,25 +58,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    logger.log();
   }
 
-  /**
-   * This autonomous (along with the chooser code above) shows how to select
-   * between different autonomous modes using the dashboard. The sendable
-   * chooser code works with the Java SmartDashboard. If you prefer the
-   * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-   * getString line to get the auto name from the text box below the Gyro
-   *
-   * <p>You can add additional auto modes by adding additional comparisons to
-   * the switch structure below with additional strings. If using the
-   * SendableChooser make sure to add them to the chooser code above as well.
-   */
   @Override
   public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
-
+    auto.initAuto();
     
   }
 
@@ -80,15 +72,13 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
+    auto.periodicAuto();
+  }
+
+
+  @Override
+  public void teleopInit() {
+    
   }
 
   /**
@@ -104,5 +94,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
+    
   }
+
 }

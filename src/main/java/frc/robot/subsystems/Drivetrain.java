@@ -26,7 +26,7 @@ public class Drivetrain extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private WPI_TalonSRX frontLeft, frontRight, backLeft, backRight, miniLeft, miniRight;
+  private WPI_TalonSRX frontLeft, frontRight, backLeft, backRight, topLeft, topRight;
 
   private ArrayList<WPI_TalonSRX> leftMotors = new ArrayList<>(), rightMotors = new ArrayList<>();
 
@@ -35,15 +35,15 @@ public class Drivetrain extends Subsystem {
     leftMotors.add(frontLeft);
     backLeft = new WPI_TalonSRX(RobotMap.Drive.backLeft);
     leftMotors.add(backLeft);
-    miniLeft = new WPI_TalonSRX(RobotMap.Drive.miniLeft); 
-    leftMotors.add(miniLeft);
+    topLeft = new WPI_TalonSRX(RobotMap.Drive.topLeft); 
+    leftMotors.add(topLeft);
 
     frontRight = new WPI_TalonSRX(RobotMap.Drive.frontRight);
     rightMotors.add(frontRight);
     backRight = new WPI_TalonSRX(RobotMap.Drive.backRight);
     rightMotors.add(backRight);
-    miniRight = new WPI_TalonSRX(RobotMap.Drive.miniRight);
-    rightMotors.add(miniRight);
+    topRight = new WPI_TalonSRX(RobotMap.Drive.topRight);
+    rightMotors.add(topRight);
 
     for(WPI_TalonSRX talon : leftMotors) {
         talon.configOpenloopRamp(0, 0);
@@ -73,8 +73,8 @@ public class Drivetrain extends Subsystem {
         talon.configNeutralDeadband(0.065);
     }
 
-    miniLeft.follow(frontLeft);
-    miniRight.follow(frontRight);
+    topLeft.follow(frontLeft);
+    topRight.follow(frontRight);
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
 
@@ -92,10 +92,17 @@ public class Drivetrain extends Subsystem {
     setDrive(OI.getDriveSchemeLeft(), OI.getDriveSchemeRight());
   }
 
-  private void setDrive(double left, double right) {
+  public void setDrive(double left, double right) {
     frontLeft.set(ControlMode.PercentOutput, left);
     frontRight.set(ControlMode.PercentOutput, right);
-    System.out.println(String.valueOf(left) + ", " + String.valueOf(right));
+  }
+
+  public double getDriveLeft() {
+    return frontLeft.get();
+  }
+
+  public double getDriveRight() {
+    return frontRight.get();
   }
 
   public void stopMoving() {

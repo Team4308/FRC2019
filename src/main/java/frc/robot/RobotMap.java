@@ -54,10 +54,10 @@ public class RobotMap {
 
 		public static final int frontLeft = 5;
 		public static final int backLeft = 7;
-		public static final int miniLeft = 6;
+		public static final int topLeft = 6;
 		public static final int frontRight = 0;
 		public static final int backRight = 1;
-		public static final int miniRight = 4;
+		public static final int topRight = 4;
 
 		public static class Speed {
 
@@ -68,72 +68,28 @@ public class RobotMap {
 
 	}
 
-
-
-	public static class Camera {
-
-		public static final int videoWidth = 640;
-		public static final int videoHeight = 480;
-
-		public static final String usbName = "cam0";
-		public static final String axisName = "axis-camera.local";
-
-	}
-
-
 	public static class Power {
 
-		public static final int primaryAmpLimit = 40;
-		public static final int secondaryAmpLimit = 30;
-		public static final int breakerAmpLimit = 120;
-		public static final int pneumaticsAmpLimit = 17;
+		public static class Drive {
 
-		public enum BatteryLevel {
-
-			NOMINAL(12, 0.5), LOW(10.5, 1.0), DISCHARGED(8.0, 1.5);
-
-			public final double center;
-			public final double range;
-
-			BatteryLevel(double center, double range) {
-
-				this.center = center;
-				this.range = range;
-
-			}
-
-			public static BatteryLevel level(double level) {
-
-				for (int i = values().length - 1; i >= 0; i--) {
-
-					BatteryLevel l = values()[i];
-
-					// if the provided value is within the range of the level
-					// enum
-					if (level >= l.center - l.range) {
-						return l;
-					}
-
-				}
-
-				return BatteryLevel.DISCHARGED;
-
-				// if (level > NOMINAL.center - NOMINAL.range) {
-				// return BatteryLevel.NOMINAL;
-				// } else if (level > LOW.center - LOW.range) {
-				// return BatteryLevel.LOW;
-				// } else {
-				// return BatteryLevel.DISCHARGED;
-				// }
-
-			}
+			public static final int frontLeft = 0;
+			public static final int backLeft = 2;
+			public static final int topLeft = 4;
+			public static final int frontRight = 1;
+			public static final int backRight = 3;
+			public static final int topRight = 5;
 
 		}
 
-		public static final double warningTemp = 60.0;
-		public static final double dangerTemp = 85.0;
-		public static final double cautionThreshold = 0.9;
-		public static final double warningThreshold = 0.8;
+		// public static final int primaryAmpLimit = 40;
+		// public static final int secondaryAmpLimit = 30;
+		// public static final int breakerAmpLimit = 120;
+		// public static final int pneumaticsAmpLimit = 17;
+
+		// public static final double warningTemp = 60.0;
+		// public static final double dangerTemp = 85.0;
+		// public static final double cautionThreshold = 0.9;
+		// public static final double warningThreshold = 0.8;
 
 	}
 
