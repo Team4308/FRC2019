@@ -10,13 +10,14 @@ package frc.robot.subsystems;
 import java.util.ArrayList;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.OI;
 import frc.robot.RobotMap;
-import frc.robot.commands.AbsoluteDrive;
+import frc.robot.subsystems.defaults.AbsoluteDrive;
 
 
 /**
@@ -28,57 +29,71 @@ public class Drivetrain extends Subsystem {
 
   private WPI_TalonSRX frontLeft, frontRight, backLeft, backRight, topLeft, topRight;
 
-  private ArrayList<WPI_TalonSRX> leftMotors = new ArrayList<>(), rightMotors = new ArrayList<>();
+  private ArrayList<WPI_TalonSRX> driveMotors = new ArrayList<>();
+
 
   public Drivetrain() {
+
+    // INITIALIZE TALONS
     frontLeft = new WPI_TalonSRX(RobotMap.Drive.frontLeft);
-    leftMotors.add(frontLeft);
+    driveMotors.add(frontLeft);
     backLeft = new WPI_TalonSRX(RobotMap.Drive.backLeft);
-    leftMotors.add(backLeft);
+    driveMotors.add(backLeft);
     topLeft = new WPI_TalonSRX(RobotMap.Drive.topLeft); 
-    leftMotors.add(topLeft);
+    driveMotors.add(topLeft);
 
     frontRight = new WPI_TalonSRX(RobotMap.Drive.frontRight);
-    rightMotors.add(frontRight);
+    driveMotors.add(frontRight);
     backRight = new WPI_TalonSRX(RobotMap.Drive.backRight);
-    rightMotors.add(backRight);
+    driveMotors.add(backRight);
     topRight = new WPI_TalonSRX(RobotMap.Drive.topRight);
-    rightMotors.add(topRight);
+    driveMotors.add(topRight);
 
-    for(WPI_TalonSRX talon : leftMotors) {
-        talon.configOpenloopRamp(0, 0);
-        talon.configContinuousCurrentLimit(35, 0); // 10
-        talon.configPeakCurrentLimit(35, 0);  // 15
-        talon.configPeakCurrentDuration(100, 0);
+    for(WPI_TalonSRX talon : driveMotors) {
+        talon.configOpenloopRamp(RobotMap.Drive.Power.kOpenloopRamp, 0);
+        talon.configContinuousCurrentLimit(RobotMap.Drive.Power.kContinuousCurrentLimit, 0); // 10
+        talon.configPeakCurrentLimit(RobotMap.Drive.Power.kPeakCurrentLimit, 0);  // 15
+        talon.configPeakCurrentDuration(RobotMap.Drive.Power.kPeakDuration, 0);
         talon.enableCurrentLimit(true);
 
         talon.setInverted(false);
         
         talon.setNeutralMode(NeutralMode.Coast);
 
-        talon.configNeutralDeadband(0.065);
+        talon.configNeutralDeadband(RobotMap.Drive.Speed.kDeadband);
     }
 
-    for(WPI_TalonSRX talon : rightMotors) {
-        talon.configOpenloopRamp(0, 0);
-        talon.configContinuousCurrentLimit(35, 0); // 10
-        talon.configPeakCurrentLimit(35, 0);  // 15
-        talon.configPeakCurrentDuration(100, 0);
-        talon.enableCurrentLimit(true);
-
-        talon.setInverted(true);
-        
-        talon.setNeutralMode(NeutralMode.Coast);
-
-        talon.configNeutralDeadband(0.065);
-    }
+    frontRight.setInverted(true);
+    backRight.setInverted(true);
+    topRight.setInverted(true);
 
     topLeft.follow(frontLeft);
     topRight.follow(frontRight);
     backLeft.follow(frontLeft);
     backRight.follow(frontRight);
 
-    setDrive(0.0, 0.0);
+    stopMoving();
+
+    // SETUP SENSORS AND MOTION CONTROL
+    frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+    frontLeft.setSensorPhase(true); 
+    
+		frontLeft.config_kF(0, RobotMap.Drive.MotionControl.kLeftFeedForward, RobotMap.Drive.MotionControl.kTimeoutMs);
+		frontLeft.config_kP(0, RobotMap.Drive.MotionControl.kLeftP, RobotMap.Drive.MotionControl.kTimeoutMs);
+		frontLeft.config_kI(0, RobotMap.Drive.MotionControl.kLeftI, RobotMap.Drive.MotionControl.kTimeoutMs);
+		frontLeft.config_kD(0, RobotMap.Drive.MotionControl.kLeftD, RobotMap.Drive.MotionControl.kTimeoutMs);
+		frontLeft.configMotionProfileTrajectoryPeriod(RobotMap.Drive.MotionControl.kTrajectoryPeriod, RobotMap.Drive.MotionControl.kTimeoutMs); 
+
+
+		frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+    frontRight.setSensorPhase(true);
+    
+		frontRight.config_kF(0, RobotMap.Drive.MotionControl.kRightFeedForward, RobotMap.Drive.MotionControl.kTimeoutMs);
+		frontRight.config_kP(0, RobotMap.Drive.MotionControl.kRightP, RobotMap.Drive.MotionControl.kTimeoutMs);
+		frontRight.config_kI(0, RobotMap.Drive.MotionControl.kRightI, RobotMap.Drive.MotionControl.kTimeoutMs);
+		frontRight.config_kD(0, RobotMap.Drive.MotionControl.kRightD, RobotMap.Drive.MotionControl.kTimeoutMs);
+		frontRight.configMotionProfileTrajectoryPeriod(RobotMap.Drive.MotionControl.kTrajectoryPeriod, RobotMap.Drive.MotionControl.kTimeoutMs); 
+	
   }
 
 
@@ -97,6 +112,11 @@ public class Drivetrain extends Subsystem {
     frontRight.set(ControlMode.PercentOutput, right);
   }
 
+  public void setMPDrive(double left, double right) {
+		frontLeft.set(ControlMode.MotionProfile, left);
+		frontRight.set(ControlMode.MotionProfile, right);
+	}
+
   public double getDriveLeft() {
     return frontLeft.get();
   }
@@ -108,5 +128,18 @@ public class Drivetrain extends Subsystem {
   public void stopMoving() {
     setDrive(0.0, 0.0);
   }
+
+
+  public double getLeftSensorPosition() {
+		return frontLeft.getSelectedSensorPosition(0) * RobotMap.Drive.MotionControl.kEncoderCountsToInches;
+	}
+	public double getRightSensorPosition() {
+		return frontRight.getSelectedSensorPosition(0) * RobotMap.Drive.MotionControl.kEncoderCountsToInches;
+	}
+
+  public void resetSensors() {
+		frontLeft.setSelectedSensorPosition(0, 0, 0);
+		frontRight.setSelectedSensorPosition(0, 0, 0);
+	}
 
 }

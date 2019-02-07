@@ -61,10 +61,43 @@ public class RobotMap {
 
 		public static class Speed {
 
-			public static final double normal = 1.0;
-			public static final double slow = 0.42;
+			public static final double kDeadband = 0.065;
+			public static final double kSpeedNormal = 1.0;
+			public static final double kSpeedSlow = 0.42;
 
 		}
+
+		public static class Power {
+
+			public static final int kOpenloopRamp = 0;
+			public static final int kContinuousCurrentLimit = 35;
+			public static final int kPeakCurrentLimit = 35;
+			public static final int kPeakDuration = 100; 
+
+		}
+
+		public static class MotionControl {
+
+			public static final double kWheelDiameter = 8; // inches
+			public static final double kEncoderCountsToInches = Math.PI * kWheelDiameter/1024;
+			public static final double kLeftFeedForward = 0.23986932;
+			public static final double kLeftP = 2.0;
+			public static final double kLeftI = 0.0;
+			public static final double kLeftD = 20.0;
+			public static final double kRightFeedForward = 0.2356057117;
+			public static final double kRightP = 2.0;
+			public static final double kRightI = 0.0;
+			public static final double kRightD = 20.0;
+			public static final int kTrajectoryPeriod = 10;
+			public static final int kTimeoutMs = 30;
+			
+		}
+
+	}
+
+	public static class Sensors {
+
+		public static final double kAngleDrift = 0.00001;
 
 	}
 

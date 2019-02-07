@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.subsystems.defaults;
 
 import frc.robot.Robot;
 

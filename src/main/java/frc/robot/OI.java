@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.ResetSensors;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -22,37 +23,6 @@ public class OI {
 	public static Joystick controlStick;
 	public static Joystick testingStick;
 	
-	private JoystickButton A1;
-	private JoystickButton B1;
-	private JoystickButton X1;
-	private JoystickButton Y1;
-	
-	private JoystickButton LB1;
-	private JoystickButton RB1;
-
-	private JoystickButton Start1;
-	private JoystickButton Back1;
-	
-	private JoystickButton A2;
-	private JoystickButton B2;
-	private JoystickButton X2;
-	private JoystickButton Y2;
-	
-	private JoystickButton LB2;
-	private JoystickButton RB2;
-
-	private JoystickButton Start2;
-	
-	private JoystickButton A3;
-	private JoystickButton B3;
-	private JoystickButton X3;
-	private JoystickButton Y3;
-	
-	private JoystickButton LB3;
-	private JoystickButton RB3;
-
-	private JoystickButton Start3;
-	
 	public OI() {
 
 		driveStick = new Joystick(0);
@@ -60,72 +30,72 @@ public class OI {
 		testingStick = new Joystick(2);
 
 		if (!driveStick.getName().equals("") || DriverStation.getInstance().getMatchType() != MatchType.None) {
-			A1 = new JoystickButton(driveStick, RobotMap.Control.Standard.a);
-			B1 = new JoystickButton(driveStick, RobotMap.Control.Standard.b);
-			X1 = new JoystickButton(driveStick, RobotMap.Control.Standard.x);
-			Y1 = new JoystickButton(driveStick, RobotMap.Control.Standard.y);
+			// JoystickButton A1 = new JoystickButton(driveStick, RobotMap.Control.Standard.a);
+			// JoystickButton B1 = new JoystickButton(driveStick, RobotMap.Control.Standard.b);
+			// JoystickButton X1 = new JoystickButton(driveStick, RobotMap.Control.Standard.x);
+			// JoystickButton Y1 = new JoystickButton(driveStick, RobotMap.Control.Standard.y);
 			
-			LB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.leftBumper);
-			RB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.rightBumper);
+			// JoystickButton LB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.leftBumper);
+			// JoystickButton RB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.rightBumper);
 
-			Start1 = new JoystickButton(driveStick, RobotMap.Control.Standard.start);
-			Back1 = new JoystickButton(driveStick, RobotMap.Control.Standard.back);
-
-			// LB1.whenPressed(new SetCurrentLimiting());
-			// RB1.whenPressed(new SetCurrentLimiting());
+			JoystickButton Start1 = new JoystickButton(driveStick, RobotMap.Control.Standard.start);
+			// JoystickButton Back1 = new JoystickButton(driveStick, RobotMap.Control.Standard.back);
 
 			// B1.whileHeld(new MoveFlag(0, false, -1));
 			// X1.whileHeld(new MoveFlag(0, true, -1));
 			// A1.whenPressed(new SetRobotState("cube drop"));
 			// Y1.whenPressed(new SetRobotState("rave"));
 
-			// Start1.whenPressed(new ResetSensors());
+			// LB1.whenPressed(new SetCurrentLimiting());
+			// RB1.whenPressed(new SetCurrentLimiting());
+
+			Start1.whenPressed(new ResetSensors());
 
 			// Back1.whenPressed(new MPAuto(new TestMP()));
 		}
 	
 		if (!controlStick.getName().equals("") || DriverStation.getInstance().getMatchType() != MatchType.None) {
-			A2 = new JoystickButton(controlStick, RobotMap.Control.Standard.a);
-			B2 = new JoystickButton(controlStick, RobotMap.Control.Standard.b);
-			X2 = new JoystickButton(controlStick, RobotMap.Control.Standard.x);
-			Y2 = new JoystickButton(controlStick, RobotMap.Control.Standard.y);
+			// JoystickButton A2 = new JoystickButton(controlStick, RobotMap.Control.Standard.a);
+			// JoystickButton B2 = new JoystickButton(controlStick, RobotMap.Control.Standard.b);
+			// JoystickButton X2 = new JoystickButton(controlStick, RobotMap.Control.Standard.x);
+			// JoystickButton Y2 = new JoystickButton(controlStick, RobotMap.Control.Standard.y);
 		
-			LB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.leftBumper);
-			RB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.rightBumper);
+			// JoystickButton LB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.leftBumper);
+			// JoystickButton RB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.rightBumper);
 
-			Start2 = new JoystickButton(controlStick, RobotMap.Control.Standard.start);	
+			// JoystickButton Start2 = new JoystickButton(controlStick, RobotMap.Control.Standard.start);	
 
-			// LB2.whenPressed(new ToggleIntake(ToggleType.CLOSE));
-			// RB2.whenPressed(new ToggleIntake(ToggleType.OPEN));
-			
 			// A2.whenPressed(new SetRobotState("cube drop"));
 			// Y2.whenPressed(new SetRobotState("rave"));
 			
 			// B2.whenPressed(new SetConveyorSpeedLimit(1.0)); // max speed
 			// X2.whenPressed(new SetConveyorSpeedLimit(0.5));
 
+			// LB2.whenPressed(new ToggleIntake(ToggleType.CLOSE));
+			// RB2.whenPressed(new ToggleIntake(ToggleType.OPEN));
+			
 			// Start2.whenPressed(new ResetSensors());
 		}
 	
 		if (!testingStick.getName().equals("") || DriverStation.getInstance().getMatchType() != MatchType.None) {
-			A3 = new JoystickButton(testingStick, RobotMap.Control.Standard.a);
-			B3 = new JoystickButton(testingStick, RobotMap.Control.Standard.b);
-			X3 = new JoystickButton(testingStick, RobotMap.Control.Standard.x);
-			Y3 = new JoystickButton(testingStick, RobotMap.Control.Standard.y);
+			// JoystickButton A3 = new JoystickButton(testingStick, RobotMap.Control.Standard.a);
+			// JoystickButton B3 = new JoystickButton(testingStick, RobotMap.Control.Standard.b);
+			// JoystickButton X3 = new JoystickButton(testingStick, RobotMap.Control.Standard.x);
+			// JoystickButton Y3 = new JoystickButton(testingStick, RobotMap.Control.Standard.y);
 		
-			LB3 = new JoystickButton(testingStick, RobotMap.Control.Standard.leftBumper);
-			RB3 = new JoystickButton(testingStick, RobotMap.Control.Standard.rightBumper);
+			// JoystickButton LB3 = new JoystickButton(testingStick, RobotMap.Control.Standard.leftBumper);
+			// JoystickButton RB3 = new JoystickButton(testingStick, RobotMap.Control.Standard.rightBumper);
 
-			Start3 = new JoystickButton(testingStick, RobotMap.Control.Standard.start);
+			// JoystickButton Start3 = new JoystickButton(testingStick, RobotMap.Control.Standard.start);
 
-			// LB3.whenPressed(new Rotate(-45.0)); // Left
-			// RB3.whenPressed(new Rotate(45.0)); // Right
-			
 			// A3.whenPressed(new Move(-60.0));
 			// Y3.whenPressed(new Move(60.0));
 			// X3.whenPressed(new RotateLong(-135.0));
 			// B3.whenPressed(new RotateLong(135.0));
 
+			// LB3.whenPressed(new Rotate(-45.0)); // Left
+			// RB3.whenPressed(new Rotate(45.0)); // Right
+			
 			// Start3.whenPressed(new ResetSensors());
 		}
 		

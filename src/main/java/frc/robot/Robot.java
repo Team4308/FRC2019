@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.auto.Auto;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Gyroscope;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,6 +30,7 @@ public class Robot extends TimedRobot {
   public static Logger logger;
   public static PowerDistributionPanel pdp;
   public static Compressor compressor;
+  public static Gyroscope gyro;
 
   /**
    * This function is run when the robot is first started up and should be
