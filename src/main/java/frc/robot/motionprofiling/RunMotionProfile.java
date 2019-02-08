@@ -9,14 +9,15 @@ import edu.wpi.first.wpilibj.command.Command;
 public class RunMotionProfile extends Command {
     
 	public MPRunner leftProfile;
-	public MPRunner rightProfile;
-	
+    public MPRunner rightProfile;
+    	
 	public RunMotionProfile(GeneratedMotionProfile profile) {
         requires(Robot.drive);
+
         setTimeout(profile.kNumPoints()*profile.kTimeStep());
 
-		leftProfile = new MPRunner(Robot.drive.getLeftTalon(), profile.kNumPoints(), profile.leftPoints());
-		rightProfile = new MPRunner(Robot.drive.getRightTalon(), profile.kNumPoints(), profile.rightPoints());
+		leftProfile = new MPRunner(Robot.drive.getLeftTalon(), profile.kNumPoints(), profile.leftPoints(), profile.bForward());
+		rightProfile = new MPRunner(Robot.drive.getRightTalon(), profile.kNumPoints(), profile.rightPoints(), profile.bForward());
 	}
 	
 	protected void execute() {

@@ -3,10 +3,12 @@ import frc.robot.motionprofiling.GeneratedMotionProfile;
 public class TestMP implements GeneratedMotionProfile {
     public int kNumPoints() {return kNumPoints;}
     public double kTimeStep() {return kTimeStep;}
+    public boolean bForward() {return bForward;}
     public double[][] leftPoints() {return leftPoints;}
     public double[][] rightPoints() {return rightPoints;}
     private static final double kTimeStep = 0.010;
     private static final int kNumPoints = 463;
+    private static final boolean bForward = true;
     // private static final int kNumPoints_R = 463;
     // Position (rotations) Velocity (RPM) Duration (ms)
     private static final double[][] leftPoints = new double[][]{

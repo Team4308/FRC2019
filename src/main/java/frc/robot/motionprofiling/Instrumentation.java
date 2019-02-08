@@ -22,7 +22,7 @@
  * 
  * 
  */
-package frc.robot.auto;
+package frc.robot.motionprofiling;
 
 import com.ctre.phoenix.motion.*;
 

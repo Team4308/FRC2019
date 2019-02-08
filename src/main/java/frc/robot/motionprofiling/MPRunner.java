@@ -72,6 +72,8 @@ public class MPRunner {
 	 */
 	private boolean _bStart = false;
 
+	private boolean _bForward = false;
+
 	/**
 	 * Since the CANTalon.set() routine is mode specific, deduce what we want
 	 * the set value to be and let the calling module apply it whenever we
@@ -110,10 +112,11 @@ public class MPRunner {
 	 * @param talon
 	 *            reference to Talon object to fetch motion profile status from.
 	 */
-	public MPRunner(TalonSRX talon, int kNumPoints, double[][] Points) {
+	public MPRunner(TalonSRX talon, int kNumPoints, double[][] Points, boolean bForward) {
 		_talon = talon;
 		_kNumPoints = kNumPoints;
 		_Points = Points;
+		_bForward = bForward;
 		/*
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
@@ -280,14 +283,17 @@ public class MPRunner {
 		
 		/* This is fast since it's just into our TOP buffer */
 		for (int i = 0; i < totalCnt; ++i) {
+			double direction = _bForward ? +1 : -1;
 			double positionRot = profile[i][0];
 			double velocityRPM = profile[i][1];
+			// double heading = _endHeading * positionRot / finalPositionRot; /* scale heading progress to position progress */
+
 			/* for each point, fill our structure and pass it to API */
-			point.position = positionRot * RobotMap.Drive.MotionControl.kSensorUnitsPerRotation; //Convert Revolutions to Units
-			point.velocity = velocityRPM * RobotMap.Drive.MotionControl.kSensorUnitsPerRotation / 600.0; //Convert RPM to Units/100ms
-			point.headingDeg = 0; /* future feature - not used in this example*/
-			point.profileSlotSelect0 = 0; /* which set of gains would you like to use [0,3]? */
-			point.profileSlotSelect1 = 0; /* future feature  - not used in this example - cascaded PID [0,1], leave zero */
+			point.position = direction * positionRot * RobotMap.Drive.MotionControl.kSensorUnitsPerRotation; //Convert Revolutions to Units
+			point.velocity = direction * velocityRPM * RobotMap.Drive.MotionControl.kSensorUnitsPerRotation / 600.0; //Convert RPM to Units/100ms
+			point.headingDeg = 0; /* currently not implemented */
+			point.profileSlotSelect0 = 0; 
+			point.profileSlotSelect1 = 0;
 			point.timeDur = (int)profile[i][2];
 			point.zeroPos = false;
 			if (i == 0)
