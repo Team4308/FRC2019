@@ -79,7 +79,13 @@ public class RobotMap {
 		public static class MotionControl {
 
 			public static final double kWheelDiameter = 8; // inches
-			public static final double kEncoderCountsToInches = Math.PI * kWheelDiameter/1024;
+			public static final double kSensorUnitsPerRotation = 1024;
+			public static final double kEncoderCountsToInches = Math.PI * kWheelDiameter/kSensorUnitsPerRotation;
+
+			public static final int kBaseTrajectoryPeriod = 0; // Base to add
+			public static final int kTrajectoryPeriod = 10; // Motion profile traj period on init
+			public static final int kTimeoutMs = 30;
+
 			public static final double kLeftFeedForward = 0.23986932;
 			public static final double kLeftP = 2.0;
 			public static final double kLeftI = 0.0;
@@ -88,8 +94,6 @@ public class RobotMap {
 			public static final double kRightP = 2.0;
 			public static final double kRightI = 0.0;
 			public static final double kRightD = 20.0;
-			public static final int kTrajectoryPeriod = 10;
-			public static final int kTimeoutMs = 30;
 			
 		}
 

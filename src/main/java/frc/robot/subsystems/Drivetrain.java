@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.OI;
@@ -27,29 +27,29 @@ public class Drivetrain extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private WPI_TalonSRX frontLeft, frontRight, backLeft, backRight, topLeft, topRight;
+  private TalonSRX frontLeft, frontRight, backLeft, backRight, topLeft, topRight;
 
-  private ArrayList<WPI_TalonSRX> driveMotors = new ArrayList<>();
+  private ArrayList<TalonSRX> driveMotors = new ArrayList<>();
 
 
   public Drivetrain() {
 
     // INITIALIZE TALONS
-    frontLeft = new WPI_TalonSRX(RobotMap.Drive.frontLeft);
+    frontLeft = new TalonSRX(RobotMap.Drive.frontLeft);
     driveMotors.add(frontLeft);
-    backLeft = new WPI_TalonSRX(RobotMap.Drive.backLeft);
+    backLeft = new TalonSRX(RobotMap.Drive.backLeft);
     driveMotors.add(backLeft);
-    topLeft = new WPI_TalonSRX(RobotMap.Drive.topLeft); 
+    topLeft = new TalonSRX(RobotMap.Drive.topLeft); 
     driveMotors.add(topLeft);
 
-    frontRight = new WPI_TalonSRX(RobotMap.Drive.frontRight);
+    frontRight = new TalonSRX(RobotMap.Drive.frontRight);
     driveMotors.add(frontRight);
-    backRight = new WPI_TalonSRX(RobotMap.Drive.backRight);
+    backRight = new TalonSRX(RobotMap.Drive.backRight);
     driveMotors.add(backRight);
-    topRight = new WPI_TalonSRX(RobotMap.Drive.topRight);
+    topRight = new TalonSRX(RobotMap.Drive.topRight);
     driveMotors.add(topRight);
 
-    for(WPI_TalonSRX talon : driveMotors) {
+    for(TalonSRX talon : driveMotors) {
         talon.configOpenloopRamp(RobotMap.Drive.Power.kOpenloopRamp, 0);
         talon.configContinuousCurrentLimit(RobotMap.Drive.Power.kContinuousCurrentLimit, 0); // 10
         talon.configPeakCurrentLimit(RobotMap.Drive.Power.kPeakCurrentLimit, 0);  // 15
@@ -96,6 +96,13 @@ public class Drivetrain extends Subsystem {
 	
   }
 
+  public TalonSRX getLeftTalon() {
+    return frontLeft;
+  }
+  public TalonSRX getRightTalon() {
+    return frontRight;
+  }
+
 
   @Override
   public void initDefaultCommand() {
@@ -118,11 +125,11 @@ public class Drivetrain extends Subsystem {
 	}
 
   public double getDriveLeft() {
-    return frontLeft.get();
+    return frontLeft.getMotorOutputPercent();
   }
 
   public double getDriveRight() {
-    return frontRight.get();
+    return frontRight.getMotorOutputPercent();
   }
 
   public void stopMoving() {
