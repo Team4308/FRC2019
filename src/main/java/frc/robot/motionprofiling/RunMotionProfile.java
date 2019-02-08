@@ -14,6 +14,8 @@ public class RunMotionProfile extends Command {
 	public RunMotionProfile(GeneratedMotionProfile profile) {
         requires(Robot.drive);
 
+        Robot.drive.resetSensors();
+
         setTimeout(profile.kNumPoints()*profile.kTimeStep());
 
 		leftProfile = new MPRunner(Robot.drive.getLeftTalon(), profile.kNumPoints(), profile.leftPoints(), profile.bForward());
