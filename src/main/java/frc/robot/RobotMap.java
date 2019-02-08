@@ -97,6 +97,16 @@ public class RobotMap {
 			
 		}
 
+		public static class Pathfinder {
+
+			public static final double kTimeStep = 0.010; // 10 ms
+			public static final double kMaxVelocity = 4; // 4 ft/s
+			public static final double kMaxAcceleration = 6; // 6 ft/s/s
+			public static final double kMaxJerk = 60; // 60 ft/s/s/s
+			public static final double kWheelBase = 2; // 2 ft
+
+		}
+
 	}
 
 	public static class Sensors {
