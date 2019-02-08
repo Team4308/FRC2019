@@ -243,7 +243,7 @@ public class MPRunner {
 
 			/* Get the motion profile status every loop */
 			_talon.getMotionProfileStatus(_status);
-			_heading = _talon.getActiveTrajectoryHeading();
+			_heading = _talon.getActiveTrajectoryPosition(1);
 			_pos = _talon.getActiveTrajectoryPosition();
 			_vel = _talon.getActiveTrajectoryVelocity();
 
