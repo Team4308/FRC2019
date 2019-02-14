@@ -26,6 +26,10 @@ public class Logger {
         SmartDashboard.putNumber("Current - Front Right Motor", Robot.pdp.getCurrent(RobotMap.Power.Drive.frontRight));
         SmartDashboard.putNumber("Current - Back Right Motor", Robot.pdp.getCurrent(RobotMap.Power.Drive.backRight));
         SmartDashboard.putNumber("Current - Top Right Motor", Robot.pdp.getCurrent(RobotMap.Power.Drive.topRight));
+    
+        SmartDashboard.putNumber("Left Drive Position", Robot.drive.getLeftSensorPosition());
+        SmartDashboard.putNumber("Right Drive Position", Robot.drive.getRightSensorPosition());
+    
     }
 
 }

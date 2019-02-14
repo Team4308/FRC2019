@@ -79,7 +79,7 @@ public class RobotMap {
 		public static class MotionControl {
 
 			public static final double kWheelDiameter = 8; // inches
-			public static final double kSensorUnitsPerRotation = 1024;
+			public static final double kSensorUnitsPerRotation = 1024/2; // Practice
 			public static final double kEncoderCountsToInches = Math.PI * kWheelDiameter/kSensorUnitsPerRotation;
 
 			public static final int kBaseTrajectoryPeriod = 0; // Base to add

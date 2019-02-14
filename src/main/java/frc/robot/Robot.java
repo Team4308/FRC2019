@@ -25,12 +25,12 @@ import frc.robot.subsystems.Gyroscope;
  */
 public class Robot extends TimedRobot {
   public static Drivetrain drive;
+  public static Gyroscope gyro;
   public static OI oi;
   public static Auto auto;
   public static Logger logger;
   public static PowerDistributionPanel pdp;
   public static Compressor compressor;
-  public static Gyroscope gyro;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -44,8 +44,9 @@ public class Robot extends TimedRobot {
 
     compressor = new Compressor(RobotMap.PCM_ID);
     
-    oi = new OI();
     drive = new Drivetrain();
+    gyro = new Gyroscope();
+    oi = new OI();
     auto = new Auto();
     logger = new Logger();
   }
