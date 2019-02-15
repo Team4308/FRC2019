@@ -114,7 +114,10 @@ public class Drivetrain extends Subsystem {
   }
 
   public void driveControl() {
-    setDrive(OI.getDriveSchemeLeft(), OI.getDriveSchemeRight());
+    double operatorInputLeft = OI.getDriveSchemeLeft();
+    double operatorInputRight = OI.getDriveSchemeRight();
+
+    setDrive(operatorInputLeft, operatorInputRight);
   }
 
   public void setDrive(double left, double right) {

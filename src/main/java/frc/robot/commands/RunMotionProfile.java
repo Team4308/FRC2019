@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import com.ctre.phoenix.motion.SetValueMotionProfile;
 
+import frc.robot.OI;
 import frc.robot.Robot;
 import frc.robot.motionprofiling.*;
 
@@ -38,6 +39,7 @@ public class RunMotionProfile extends Command {
     }
 	
 	protected void execute() {
+
         leftProfile.control();
         rightProfile.control();
         
@@ -48,7 +50,7 @@ public class RunMotionProfile extends Command {
     }
 
 	protected boolean isFinished() {
-		return isTimedOut();
+		return isTimedOut() || OI.getDriveSchemeLeft() > 0 || OI.getDriveSchemeRight() > 0;
 	}
 	
 	protected void end() {

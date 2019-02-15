@@ -6,10 +6,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AbsoluteElevator extends Command {
 	
-	public AbsoluteElevator() {
-		requires(Robot.elevator);
-	}
-	
 	protected void execute() {
 		Robot.elevator.elevatorControl();
 	}

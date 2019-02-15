@@ -25,7 +25,11 @@ public class RobotMap {
 
 	public static class Control {
 
+		public static final double kInputDeadband = 0.065;
+
 		public static final int driveStick = 0;
+		public static final int controlStick = 1;
+		public static final int testingStick = 2;
 
 		public static class Standard {
 
@@ -61,7 +65,7 @@ public class RobotMap {
 
 		public static class Speed {
 
-			public static final double kDeadband = 0.065;
+			public static final double kDeadband = 0.05;
 			public static final double kSpeedNormal = 1.0;
 			public static final double kSpeedSlow = 0.42;
 
@@ -116,7 +120,7 @@ public class RobotMap {
 
 		public static class Speed {
 
-			public static final double kDeadband = 0.065;
+			public static final double kDeadband = 0.05;
 			public static final double kSpeedNormal = 1.0;
 			public static final double kSpeedSlow = 0.42;
 
@@ -157,6 +161,9 @@ public class RobotMap {
 	public static class Sensors {
 
 		public static final double kAngleDrift = 0.00001;
+		public static final double kUltrasonicVoltageToInches = 102.4/25.4; // 102.4 mm per volt, 25.4 mm per inch
+
+		public static final int ultrasonicChannel = 1;
 
 	}
 

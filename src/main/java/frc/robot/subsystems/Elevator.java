@@ -29,6 +29,8 @@ public class Elevator extends Subsystem {
   private TalonSRX leftElevator, rightElevator;
   private ArrayList<TalonSRX> elevatorMotors = new ArrayList<>();
 
+  private double currentTargetPosition = 0;
+
   public Elevator() {
 
     leftElevator = new TalonSRX(RobotMap.Elevator.left);
@@ -79,11 +81,24 @@ public class Elevator extends Subsystem {
   }
 
   public void elevatorControl() {
-    leftElevator.set(ControlMode.PercentOutput, OI.getElevatorScheme());
+    double operatorInput = OI.getElevatorScheme();
+
+    if (Math.abs(operatorInput) > 0) {
+      leftElevator.set(ControlMode.PercentOutput, operatorInput);
+      currentTargetPosition = getSensorPosition();
+    }
+    else {
+      leftElevator.set(ControlMode.MotionMagic, currentTargetPosition);
+    }
+
   }
 
   public void stopMoving() {
     leftElevator.set(ControlMode.PercentOutput, 0.0);
+  }
+
+  public void setTargetPosition(double targetPos) {
+    currentTargetPosition = targetPos;
   }
 
   public double getSensorPosition() {

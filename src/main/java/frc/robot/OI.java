@@ -56,9 +56,9 @@ public class OI {
 	
 	public OI() {
 
-		driveStick = new Joystick(0);
-		controlStick = new Joystick(1);
-		testingStick = new Joystick(2);
+		driveStick = new Joystick(RobotMap.Control.driveStick);
+		controlStick = new Joystick(RobotMap.Control.controlStick);
+		testingStick = new Joystick(RobotMap.Control.testingStick);
 
 		if (!driveStick.getName().equals("") || DriverStation.getInstance().getMatchType() != MatchType.None) {
 			// A1 = new JoystickButton(driveStick, RobotMap.Control.Standard.a);
@@ -194,11 +194,20 @@ public class OI {
 
 	public static double getElevatorScheme() {
 
-		return normalized(0);
+//		double leftX = controlStick.getRawAxis(RobotMap.Control.Standard.leftX);
+// 		double leftY = controlStick.getRawAxis(RobotMap.Control.Standard.leftY);
+// 		double rightX = controlStick.getRawAxis(RobotMap.Control.Standard.rightX);
+		double rightY = -controlStick.getRawAxis(RobotMap.Control.Standard.rightY);
+
+		return normalized(rightY);
 
 	}
 	
 	private static double normalized(double val) {
+		if (Math.abs(val) < RobotMap.Control.kInputDeadband) {
+			return 0;
+		}
+
 		if (val > 1.0) {
 			return 1.0;
 		}
