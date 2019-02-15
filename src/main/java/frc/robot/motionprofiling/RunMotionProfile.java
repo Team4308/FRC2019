@@ -1,10 +1,9 @@
-package frc.robot.commands;
+package frc.robot.motionprofiling;
 
 import com.ctre.phoenix.motion.SetValueMotionProfile;
 
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.motionprofiling.*;
 
 import edu.wpi.first.wpilibj.command.Command;
 
