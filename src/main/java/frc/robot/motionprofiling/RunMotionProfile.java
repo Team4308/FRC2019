@@ -1,10 +1,9 @@
-package frc.robot.commands;
+package frc.robot.motionprofiling;
 
 import com.ctre.phoenix.motion.SetValueMotionProfile;
 
 import frc.robot.OI;
 import frc.robot.Robot;
-import frc.robot.motionprofiling.*;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -13,19 +12,18 @@ public class RunMotionProfile extends Command {
 	public MPRunner leftProfile;
     public MPRunner rightProfile;
 
-    private GeneratedMotionProfile _profile;
-    	
-	public RunMotionProfile(GeneratedMotionProfile profile) {
+    protected GeneratedMotionProfile _profile;  // MUST BE SET BEFORE RUNNING
+    
+    public RunMotionProfile(GeneratedMotionProfile profile) {
         requires(Robot.drive);
         _profile = profile;
     }
 
-    public RunMotionProfile(double dist, double angle) {
+	public RunMotionProfile() {
         requires(Robot.drive);
-        CreatePath path = new CreatePath(dist, angle);
-        _profile = path.getProfile();
     }
     
+    @Override
     protected void initialize() {
         Robot.drive.resetSensors();
 
@@ -37,7 +35,8 @@ public class RunMotionProfile extends Command {
         leftProfile.startMotionProfile();
         rightProfile.startMotionProfile();
     }
-	
+    
+    @Override
 	protected void execute() {
 
         leftProfile.control();
@@ -49,16 +48,19 @@ public class RunMotionProfile extends Command {
         Robot.drive.setMPDrive(setOutputLeft.value, setOutputRight.value);
     }
 
+    @Override
 	protected boolean isFinished() {
 		return isTimedOut() || OI.getDriveSchemeLeft() > 0 || OI.getDriveSchemeRight() > 0;
 	}
-	
+    
+    @Override
 	protected void end() {
         Robot.drive.stopMoving();
         leftProfile.reset();
         rightProfile.reset();
     }
-	
+    
+    @Override
 	protected void interrupted() {
 		end();
 	}

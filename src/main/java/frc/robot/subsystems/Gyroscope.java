@@ -16,6 +16,8 @@ public class Gyroscope extends Subsystem {
 	public Gyroscope() {
 		navx = new AHRS(SPI.Port.kMXP);
 		drift = 0;
+
+		resetSensors();
 	}
 	
 	@Override

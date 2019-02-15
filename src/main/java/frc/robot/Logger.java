@@ -9,6 +9,7 @@ public class Logger {
     }
 
     public void log() {
+        
         SmartDashboard.putNumber("Left X", OI.driveStick.getRawAxis(RobotMap.Control.Standard.leftX));        
         SmartDashboard.putNumber("Left Y", OI.driveStick.getRawAxis(RobotMap.Control.Standard.leftY));
         SmartDashboard.putNumber("Right X", OI.driveStick.getRawAxis(RobotMap.Control.Standard.rightX));
