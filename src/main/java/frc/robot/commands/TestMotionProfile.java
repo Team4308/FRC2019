@@ -20,6 +20,7 @@ public class TestMotionProfile extends RunMotionProfile {
   @Override
   protected void initialize() {
     _profile = new TestMP();
+    super.initialize();
   }
 
 }
