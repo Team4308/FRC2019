@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.sensors;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -26,7 +26,7 @@ public class Gyroscope extends Subsystem {
 	}
 
 	public void gyroControl() {
-		drift += RobotMap.Sensors.kAngleDrift;
+		drift += RobotMap.Sensors.Gyro.kAngleDrift;
 		navx.setAngleAdjustment(drift);
 	}
 

@@ -21,13 +21,16 @@ public class CreatePath {
   private Trajectory rightTrajectory;
 
   private GeneratedMotionProfile profile;
+  private boolean forward;
 
   public Trajectory getLeftTrajectory() {return leftTrajectory;}
   public Trajectory getRightTrajectory() {return rightTrajectory;}
 
   public GeneratedMotionProfile getProfile() {return profile;}
 
-  public CreatePath(double dist, double angle) {
+  public CreatePath(double dist, double angle, boolean forward) {
+
+    this.forward = forward;
 
     Waypoint[] points = new Waypoint[] {
       new Waypoint(0, 0, 0),
@@ -59,8 +62,6 @@ public class CreatePath {
   }
 
   private void generateProfile() {
-    
-    boolean forward = true;
 
     double[][] leftPoints = new double[leftTrajectory.length()][3];
 

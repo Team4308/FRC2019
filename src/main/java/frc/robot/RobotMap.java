@@ -169,10 +169,21 @@ public class RobotMap {
 
 	public static class Sensors {
 
-		public static final double kAngleDrift = 0.00001;
-		public static final double kUltrasonicVoltageToInches = 102.4/25.4; // 102.4 mm per volt, 25.4 mm per inch
+		public static class Gyro {
+			public static final double kAngleDrift = 0.00001;
+		}
 
-		public static final int ultrasonicChannel = 1;
+		public static class UltrasonicSensor {
+			public static final int ultrasonicChannel = 1;
+			public static final double kUltrasonicVoltageToInches = 102.4/25.4; // 102.4 mm per volt, 25.4 mm per inch
+		}
+
+		public static class Camera {
+			public static final String cameraTableKey = "PiVision";
+			public static final String tapeYawKey = "tapeYaw";
+			public static final String tapePitchKey = "tapePitch";
+			public static final String tapeDistanceKey = "tapeDistance";
+		}
 
 	}
 

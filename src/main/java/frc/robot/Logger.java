@@ -32,6 +32,11 @@ public class Logger {
         SmartDashboard.putNumber("Right Drive Position", Robot.drive.getRightSensorPosition());
 
         SmartDashboard.putNumber("Gyro Angle", Robot.gyro.getAngle());
+
+        SmartDashboard.putNumber("Ultrasonic Distance", Robot.ultrasonic.getDistance());
+
+        SmartDashboard.putNumber("Camera Tape Yaw", Robot.camera.getTapeYaw());
+        SmartDashboard.putNumber("Camera Tape Distance", Robot.camera.getTapeDistance());
     
     }
 
