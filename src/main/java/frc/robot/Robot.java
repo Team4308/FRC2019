@@ -15,7 +15,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.auto.Auto;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Gyroscope;
+import frc.robot.subsystems.sensors.Camera;
+import frc.robot.subsystems.sensors.Gyroscope;
+import frc.robot.subsystems.sensors.UltrasonicSensor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,6 +30,8 @@ public class Robot extends TimedRobot {
   public static Drivetrain drive;
   public static Elevator elevator;
   public static Gyroscope gyro;
+  public static UltrasonicSensor ultrasonic;
+  public static Camera camera;
   public static OI oi;
   public static Auto auto;
   public static Logger logger;
@@ -49,6 +53,7 @@ public class Robot extends TimedRobot {
     drive = new Drivetrain();
     elevator = new Elevator();
     gyro = new Gyroscope();
+    ultrasonic = new UltrasonicSensor();
     oi = new OI();
     auto = new Auto();
     logger = new Logger();
