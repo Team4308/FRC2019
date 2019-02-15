@@ -29,6 +29,8 @@ public class Logger {
     
         SmartDashboard.putNumber("Left Drive Position", Robot.drive.getLeftSensorPosition());
         SmartDashboard.putNumber("Right Drive Position", Robot.drive.getRightSensorPosition());
+
+        SmartDashboard.putNumber("Gyro Angle", Robot.gyro.getAngle());
     
     }
 

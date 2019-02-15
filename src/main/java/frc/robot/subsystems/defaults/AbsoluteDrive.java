@@ -6,10 +6,6 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class AbsoluteDrive extends Command {
 	
-	public AbsoluteDrive() {
-		requires(Robot.drive);
-	}
-	
 	protected void execute() {
 		Robot.drive.driveControl();
 	}

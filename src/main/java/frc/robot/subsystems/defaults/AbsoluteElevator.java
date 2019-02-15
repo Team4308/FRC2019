@@ -4,10 +4,10 @@ import frc.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AbsoluteGyroscope extends Command {
+public class AbsoluteElevator extends Command {
 	
 	protected void execute() {
-		Robot.gyro.gyroControl();
+		Robot.elevator.elevatorControl();
 	}
 
 	protected boolean isFinished() {
@@ -15,11 +15,11 @@ public class AbsoluteGyroscope extends Command {
 	}
 	
 	protected void end() {
-    	
+    	Robot.elevator.stopMoving();
     }
 	
 	protected void interrupted() {
-		
+		Robot.elevator.stopMoving();
 	}
 
 }

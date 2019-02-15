@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.auto.Auto;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Gyroscope;
 
 /**
@@ -25,6 +26,7 @@ import frc.robot.subsystems.Gyroscope;
  */
 public class Robot extends TimedRobot {
   public static Drivetrain drive;
+  public static Elevator elevator;
   public static Gyroscope gyro;
   public static OI oi;
   public static Auto auto;
@@ -45,6 +47,7 @@ public class Robot extends TimedRobot {
     compressor = new Compressor(RobotMap.PCM_ID);
     
     drive = new Drivetrain();
+    elevator = new Elevator();
     gyro = new Gyroscope();
     oi = new OI();
     auto = new Auto();
