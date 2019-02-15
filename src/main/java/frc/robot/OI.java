@@ -191,6 +191,12 @@ public class OI {
 		return normalized(leftY - rightX);
 		
 	}
+
+	public static double getElevatorScheme() {
+
+		return normalized(0);
+
+	}
 	
 	private static double normalized(double val) {
 		if (val > 1.0) {

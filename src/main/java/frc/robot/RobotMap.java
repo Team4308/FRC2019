@@ -109,6 +109,51 @@ public class RobotMap {
 
 	}
 
+	public static class Elevator {
+
+		public static final int left = 99999; // TODO
+		public static final int right = 99999; // TODO
+
+		public static class Speed {
+
+			public static final double kDeadband = 0.065;
+			public static final double kSpeedNormal = 1.0;
+			public static final double kSpeedSlow = 0.42;
+
+		}
+
+		public static class Power {
+
+			public static final int kOpenloopRamp = 0;
+			public static final int kContinuousCurrentLimit = 35;
+			public static final int kPeakCurrentLimit = 35;
+			public static final int kPeakDuration = 100; 
+
+		}
+
+		public static class MotionControl {
+
+			public static final double kSprocketTeeth = 16; // teeth
+			public static final double kChainPitch = 1/4; // inches
+			public static final double kSensorUnitsPerRotation = 4096; 
+			public static final double kEncoderCountsToInches = kSprocketTeeth * kChainPitch/kSensorUnitsPerRotation;
+
+			public static final int kBaseTrajectoryPeriod = 0; // Base to add
+			public static final int kTrajectoryPeriod = 10; // Motion profile traj period on init
+			public static final int kTimeoutMs = 30;
+
+			public static final double kFeedForward = 0.23986932;
+			public static final double kP = 0.2;
+			public static final double kI = 0.0;
+			public static final double kD = 0.0;
+
+			public static final int kCruiseVelocity = 8192;
+			public static final int kAcceleration = 1024;
+			
+		}
+
+	}
+
 	public static class Sensors {
 
 		public static final double kAngleDrift = 0.00001;

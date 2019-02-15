@@ -50,17 +50,20 @@ public class Drivetrain extends Subsystem {
     driveMotors.add(topRight);
 
     for(TalonSRX talon : driveMotors) {
-        talon.configOpenloopRamp(RobotMap.Drive.Power.kOpenloopRamp, 0);
-        talon.configContinuousCurrentLimit(RobotMap.Drive.Power.kContinuousCurrentLimit, 0); // 10
-        talon.configPeakCurrentLimit(RobotMap.Drive.Power.kPeakCurrentLimit, 0);  // 15
-        talon.configPeakCurrentDuration(RobotMap.Drive.Power.kPeakDuration, 0);
-        talon.enableCurrentLimit(true);
 
-        talon.setInverted(false);
+      talon.configFactoryDefault();
+
+      talon.configOpenloopRamp(RobotMap.Drive.Power.kOpenloopRamp, 0);
+      talon.configContinuousCurrentLimit(RobotMap.Drive.Power.kContinuousCurrentLimit, 0); // 10
+      talon.configPeakCurrentLimit(RobotMap.Drive.Power.kPeakCurrentLimit, 0);  // 15
+      talon.configPeakCurrentDuration(RobotMap.Drive.Power.kPeakDuration, 0);
+      talon.enableCurrentLimit(true);
+
+      talon.setInverted(false);
         
-        talon.setNeutralMode(NeutralMode.Coast);
+      talon.setNeutralMode(NeutralMode.Coast);
 
-        talon.configNeutralDeadband(RobotMap.Drive.Speed.kDeadband);
+      talon.configNeutralDeadband(RobotMap.Drive.Speed.kDeadband);
     }
 
     frontRight.setInverted(true);
