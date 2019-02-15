@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ResetSensors;
+import frc.robot.commands.SetElevatorPosition;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -34,10 +35,10 @@ public class OI {
 	private JoystickButton Start1;
 	// private JoystickButton Back1;
 	
-	// private JoystickButton A2;
-	// private JoystickButton B2;
-	// private JoystickButton X2;
-	// private JoystickButton Y2;
+	private JoystickButton A2;
+	private JoystickButton B2;
+	private JoystickButton X2;
+	private JoystickButton Y2;
 	
 	// private JoystickButton LB2;
 	// private JoystickButton RB2;
@@ -86,21 +87,20 @@ public class OI {
 		}
 	
 		if (!controlStick.getName().equals("") || DriverStation.getInstance().getMatchType() != MatchType.None) {
-			// A2 = new JoystickButton(controlStick, RobotMap.Control.Standard.a);
-			// B2 = new JoystickButton(controlStick, RobotMap.Control.Standard.b);
-			// X2 = new JoystickButton(controlStick, RobotMap.Control.Standard.x);
-			// Y2 = new JoystickButton(controlStick, RobotMap.Control.Standard.y);
+			A2 = new JoystickButton(controlStick, RobotMap.Control.Standard.a);
+			B2 = new JoystickButton(controlStick, RobotMap.Control.Standard.b);
+			X2 = new JoystickButton(controlStick, RobotMap.Control.Standard.x);
+			Y2 = new JoystickButton(controlStick, RobotMap.Control.Standard.y);
 		
 			// LB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.leftBumper);
 			// RB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.rightBumper);
 
 			// Start2 = new JoystickButton(controlStick, RobotMap.Control.Standard.start);	
 
-			// A2.whenPressed(new SetRobotState("cube drop"));
-			// Y2.whenPressed(new SetRobotState("rave"));
-			
-			// B2.whenPressed(new SetConveyorSpeedLimit(1.0)); // max speed
-			// X2.whenPressed(new SetConveyorSpeedLimit(0.5));
+			A2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.ground));
+			X2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.rocketPort));
+			Y2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.cargoShip));
+			B2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.top));
 
 			// LB2.whenPressed(new ToggleIntake(ToggleType.CLOSE));
 			// RB2.whenPressed(new ToggleIntake(ToggleType.OPEN));

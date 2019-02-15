@@ -126,6 +126,15 @@ public class RobotMap {
 
 		}
 
+		public static class Position {
+
+			public static final double ground = 0.0;
+			public static final double cargoShip = 29.0;
+			public static final double rocketPort = 20.0;
+			public static final double top = 31.0;
+
+		}
+
 		public static class Power {
 
 			public static final int kOpenloopRamp = 0;
