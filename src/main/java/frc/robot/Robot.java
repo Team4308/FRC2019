@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
     oi = new OI();
     auto = new Auto();
     logger = new Logger();
+
   }
 
   /**

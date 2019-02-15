@@ -96,7 +96,9 @@ public class Drivetrain extends Subsystem {
 		frontRight.config_kI(0, RobotMap.Drive.MotionControl.kRightI, RobotMap.Drive.MotionControl.kTimeoutMs);
 		frontRight.config_kD(0, RobotMap.Drive.MotionControl.kRightD, RobotMap.Drive.MotionControl.kTimeoutMs);
 		frontRight.configMotionProfileTrajectoryPeriod(RobotMap.Drive.MotionControl.kTrajectoryPeriod, RobotMap.Drive.MotionControl.kTimeoutMs); 
-	
+  
+    resetSensors();
+
   }
 
   public TalonSRX getLeftTalon() {
