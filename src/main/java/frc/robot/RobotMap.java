@@ -167,6 +167,29 @@ public class RobotMap {
 
 	}
 
+	public static class Intake {
+
+		public static final int motor = 99999;
+
+		public static class Speed {
+
+			public static final double kDeadband = 0.05;
+			public static final double kSpeedNormal = 1.0;
+			public static final double kSpeedSlow = 0.42;
+
+		}
+
+		public static class Power {
+
+			public static final int kOpenloopRamp = 0;
+			public static final int kContinuousCurrentLimit = 35;
+			public static final int kPeakCurrentLimit = 35;
+			public static final int kPeakDuration = 100; 
+
+		}
+
+	}
+
 	public static class Sensors {
 
 		public static class Gyro {
@@ -197,6 +220,19 @@ public class RobotMap {
 			public static final int frontRight = 1;
 			public static final int backRight = 3;
 			public static final int topRight = 5;
+
+		}
+
+		public static class Elevator {
+
+			public static final int leftElevator = 6;
+			public static final int rightElevator = 7;
+
+		}
+
+		public static class Intake {
+
+			public static final int intakeMotor = 8;
 
 		}
 

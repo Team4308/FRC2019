@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.auto.Auto;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.sensors.Camera;
 import frc.robot.subsystems.sensors.Gyroscope;
 import frc.robot.subsystems.sensors.UltrasonicSensor;
@@ -29,6 +30,7 @@ import frc.robot.subsystems.sensors.UltrasonicSensor;
 public class Robot extends TimedRobot {
   public static Drivetrain drive;
   public static Elevator elevator;
+  public static Intake intake;
   public static Gyroscope gyro;
   public static UltrasonicSensor ultrasonic;
   public static Camera camera;
@@ -52,6 +54,7 @@ public class Robot extends TimedRobot {
     
     drive = new Drivetrain();
     elevator = new Elevator();
+    intake = new Intake();
     gyro = new Gyroscope();
     ultrasonic = new UltrasonicSensor();
     oi = new OI();
