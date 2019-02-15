@@ -15,8 +15,6 @@ package frc.robot;
  */
 public class RobotMap {
 
-	public static final double encoderPulseDistance = 0.042;
-
 	public static final int PCM_ID = 1;
 	public static final int PDP_ID = 0;
 
@@ -235,16 +233,6 @@ public class RobotMap {
 			public static final int intakeMotor = 8;
 
 		}
-
-		// public static final int primaryAmpLimit = 40;
-		// public static final int secondaryAmpLimit = 30;
-		// public static final int breakerAmpLimit = 120;
-		// public static final int pneumaticsAmpLimit = 17;
-
-		// public static final double warningTemp = 60.0;
-		// public static final double dangerTemp = 85.0;
-		// public static final double cautionThreshold = 0.9;
-		// public static final double warningThreshold = 0.8;
 
 	}
 
