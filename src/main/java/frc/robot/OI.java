@@ -150,7 +150,7 @@ public class OI {
 //		double leftX = driveStick.getRawAxis(RobotMap.Control.Standard.leftX);
 		double leftY = driveStick.getRawAxis(RobotMap.Control.Standard.leftY);
 		double rightX = driveStick.getRawAxis(RobotMap.Control.Standard.rightX);
-//		double rightY = -driveStick.getRawAxis(RobotMap.Control.Standard.rightY);
+//		double rightY = driveStick.getRawAxis(RobotMap.Control.Standard.rightY);
 		
 		// if (leftY <= 0) {
 		// 	leftY = -(leftY*leftY);
@@ -174,7 +174,7 @@ public class OI {
 //		double leftX = driveStick.getRawAxis(RobotMap.Control.Standard.leftX);
 		double leftY = driveStick.getRawAxis(RobotMap.Control.Standard.leftY);
 		double rightX = driveStick.getRawAxis(RobotMap.Control.Standard.rightX);
-//		double rightY = -driveStick.getRawAxis(RobotMap.Control.Standard.rightY);
+//		double rightY = driveStick.getRawAxis(RobotMap.Control.Standard.rightY);
 		
 		// if (leftY <= 0) {
 		// 	leftY = -(leftY*leftY);
@@ -197,9 +197,20 @@ public class OI {
 //		double leftX = controlStick.getRawAxis(RobotMap.Control.Standard.leftX);
 // 		double leftY = controlStick.getRawAxis(RobotMap.Control.Standard.leftY);
 // 		double rightX = controlStick.getRawAxis(RobotMap.Control.Standard.rightX);
-		double rightY = -controlStick.getRawAxis(RobotMap.Control.Standard.rightY);
+		double rightY = controlStick.getRawAxis(RobotMap.Control.Standard.rightY);
 
 		return normalized(rightY);
+
+	}
+
+	public static double getIntakeScheme() {
+
+//		double leftX = controlStick.getRawAxis(RobotMap.Control.Standard.leftX);
+		double leftY = controlStick.getRawAxis(RobotMap.Control.Standard.leftY);
+// 		double rightX = controlStick.getRawAxis(RobotMap.Control.Standard.rightX);
+// 		double rightY = controlStick.getRawAxis(RobotMap.Control.Standard.rightY);
+
+		return normalized(leftY);
 
 	}
 	

@@ -23,8 +23,6 @@ import frc.robot.subsystems.defaults.AbsoluteElevator;
  * Add your docs here.
  */
 public class Elevator extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
 
   private TalonSRX leftElevator, rightElevator;
   private ArrayList<TalonSRX> elevatorMotors = new ArrayList<>();
