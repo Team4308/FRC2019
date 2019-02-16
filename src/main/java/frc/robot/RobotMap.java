@@ -54,12 +54,12 @@ public class RobotMap {
 
 	public static class Drive {
 
-		public static final int frontLeft = 5;
-		public static final int backLeft = 7;
-		public static final int topLeft = 6;
-		public static final int frontRight = 0;
-		public static final int backRight = 1;
-		public static final int topRight = 4;
+		public static final int frontLeft = 0;
+		public static final int backLeft = 4;
+		public static final int topLeft = 1;
+		public static final int frontRight = 5;
+		public static final int backRight = 6;
+		public static final int topRight = 7;
 
 		public static class Speed {
 
@@ -113,8 +113,8 @@ public class RobotMap {
 
 	public static class Elevator {
 
-		public static final int left = 99999; // TODO
-		public static final int right = 99999; // TODO
+		public static final int left = 2;
+		public static final int right = 9;
 
 		public static class Speed {
 
@@ -167,7 +167,7 @@ public class RobotMap {
 
 	public static class Intake {
 
-		public static final int motor = 99999;
+		public static final int motor = 3;
 
 		public static class Speed {
 
@@ -212,25 +212,25 @@ public class RobotMap {
 
 		public static class Drive {
 
-			public static final int frontLeft = 0;
+			public static final int frontLeft = 1;
 			public static final int backLeft = 2;
-			public static final int topLeft = 4;
-			public static final int frontRight = 1;
-			public static final int backRight = 3;
-			public static final int topRight = 5;
+			public static final int topLeft = 0;
+			public static final int frontRight = 14;
+			public static final int backRight = 13;
+			public static final int topRight = 15;
 
 		}
 
 		public static class Elevator {
 
-			public static final int leftElevator = 6;
-			public static final int rightElevator = 7;
+			public static final int leftElevator = 12;
+			public static final int rightElevator = 3;
 
 		}
 
 		public static class Intake {
 
-			public static final int intakeMotor = 8;
+			public static final int intakeMotor = 11;
 
 		}
 
