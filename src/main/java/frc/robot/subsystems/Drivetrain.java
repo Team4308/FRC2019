@@ -79,7 +79,7 @@ public class Drivetrain extends Subsystem {
 
     // SETUP SENSORS AND MOTION CONTROL
     frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-    frontLeft.setSensorPhase(true); 
+    frontLeft.setSensorPhase(false); 
     
 		frontLeft.config_kF(0, RobotMap.Drive.MotionControl.kLeftFeedForward, RobotMap.Drive.MotionControl.kTimeoutMs);
 		frontLeft.config_kP(0, RobotMap.Drive.MotionControl.kLeftP, RobotMap.Drive.MotionControl.kTimeoutMs);
@@ -89,7 +89,7 @@ public class Drivetrain extends Subsystem {
 
 
 		frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-    frontRight.setSensorPhase(true);
+    frontRight.setSensorPhase(false);
     
 		frontRight.config_kF(0, RobotMap.Drive.MotionControl.kRightFeedForward, RobotMap.Drive.MotionControl.kTimeoutMs);
 		frontRight.config_kP(0, RobotMap.Drive.MotionControl.kRightP, RobotMap.Drive.MotionControl.kTimeoutMs);
@@ -146,11 +146,18 @@ public class Drivetrain extends Subsystem {
 
 
   public double getLeftSensorPosition() {
-		return frontLeft.getSelectedSensorPosition(0) * RobotMap.Drive.MotionControl.kEncoderCountsToInches;
+		return frontLeft.getSelectedSensorPosition(0) * RobotMap.Drive.MotionControl.kEncoderInchesPerCount;
 	}
 	public double getRightSensorPosition() {
-		return frontRight.getSelectedSensorPosition(0) * RobotMap.Drive.MotionControl.kEncoderCountsToInches;
-	}
+		return frontRight.getSelectedSensorPosition(0) * RobotMap.Drive.MotionControl.kEncoderInchesPerCount;
+  }
+  
+  public double getLeftSensorVelocity() {
+    return frontLeft.getSelectedSensorVelocity(0);
+  }
+	public double getRightSensorVelocity() {
+    return frontRight.getSelectedSensorVelocity(0);
+  }
 
   public void resetSensors() {
 		frontLeft.setSelectedSensorPosition(0, 0, 0);

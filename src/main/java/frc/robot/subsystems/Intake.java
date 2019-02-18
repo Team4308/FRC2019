@@ -37,7 +37,7 @@ public class Intake extends Subsystem {
 
     intakeMotor.setInverted(false);
     
-    intakeMotor.setNeutralMode(NeutralMode.Coast);
+    intakeMotor.setNeutralMode(NeutralMode.Brake);
 
     intakeMotor.configNeutralDeadband(RobotMap.Intake.Speed.kDeadband);
 

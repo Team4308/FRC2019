@@ -7,12 +7,12 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.DriverStation.MatchType;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import frc.robot.commands.ResetSensors;
 import frc.robot.commands.SetElevatorPosition;
+import frc.robot.motionprofiling.RunMotionProfile;
+import frc.robot.motionprofiling.profiles.Forward2MP;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -24,16 +24,16 @@ public class OI {
 	public static Joystick controlStick;
 	public static Joystick testingStick;
 
-	// private JoystickButton A1;
-	// private JoystickButton B1;
-	// private JoystickButton X1;
-	// private JoystickButton Y1;
+	private JoystickButton A1;
+	private JoystickButton B1;
+	private JoystickButton X1;
+	private JoystickButton Y1;
 	
 	// private JoystickButton LB1;
 	// private JoystickButton RB1;
 
 	private JoystickButton Start1;
-	// private JoystickButton Back1;
+	private JoystickButton Back1;
 	
 	private JoystickButton A2;
 	private JoystickButton B2;
@@ -43,7 +43,7 @@ public class OI {
 	// private JoystickButton LB2;
 	// private JoystickButton RB2;
 
-	// private JoystickButton Start2;
+	private JoystickButton Start2;
 	
 	// private JoystickButton A3;
 	// private JoystickButton B3;
@@ -61,74 +61,68 @@ public class OI {
 		controlStick = new Joystick(RobotMap.Control.controlStick);
 		testingStick = new Joystick(RobotMap.Control.testingStick);
 
-		if (!driveStick.getName().equals("") || DriverStation.getInstance().getMatchType() != MatchType.None) {
-			// A1 = new JoystickButton(driveStick, RobotMap.Control.Standard.a);
-			// B1 = new JoystickButton(driveStick, RobotMap.Control.Standard.b);
-			// X1 = new JoystickButton(driveStick, RobotMap.Control.Standard.x);
-			// Y1 = new JoystickButton(driveStick, RobotMap.Control.Standard.y);
-			
-			// LB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.leftBumper);
-			// RB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.rightBumper);
-
-			Start1 = new JoystickButton(driveStick, RobotMap.Control.Standard.start);
-			// Back1 = new JoystickButton(driveStick, RobotMap.Control.Standard.back);
-
-			// B1.whileHeld(new MoveFlag(0, false, -1));
-			// X1.whileHeld(new MoveFlag(0, true, -1));
-			// A1.whenPressed(new SetRobotState("cube drop"));
-			// Y1.whenPressed(new SetRobotState("rave"));
-
-			// LB1.whenPressed(new SetCurrentLimiting());
-			// RB1.whenPressed(new SetCurrentLimiting());
-
-			Start1.whenPressed(new ResetSensors());
-
-			// Back1.whenPressed(new MPAuto(new TestMP()));
-		}
-	
-		if (!controlStick.getName().equals("") || DriverStation.getInstance().getMatchType() != MatchType.None) {
-			A2 = new JoystickButton(controlStick, RobotMap.Control.Standard.a);
-			B2 = new JoystickButton(controlStick, RobotMap.Control.Standard.b);
-			X2 = new JoystickButton(controlStick, RobotMap.Control.Standard.x);
-			Y2 = new JoystickButton(controlStick, RobotMap.Control.Standard.y);
+		A1 = new JoystickButton(driveStick, RobotMap.Control.Standard.a);
+		B1 = new JoystickButton(driveStick, RobotMap.Control.Standard.b);
+		X1 = new JoystickButton(driveStick, RobotMap.Control.Standard.x);
+		Y1 = new JoystickButton(driveStick, RobotMap.Control.Standard.y);
 		
-			// LB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.leftBumper);
-			// RB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.rightBumper);
+		// LB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.leftBumper);
+		// RB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.rightBumper);
 
-			// Start2 = new JoystickButton(controlStick, RobotMap.Control.Standard.start);	
+		Start1 = new JoystickButton(driveStick, RobotMap.Control.Standard.start);
+		Back1 = new JoystickButton(driveStick, RobotMap.Control.Standard.back);
 
-			A2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.ground));
-			X2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.rocketPort));
-			Y2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.cargoShip));
-			B2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.top));
+		A1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.ground));
+		X1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.depot));
+		Y1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.rocketPort));
+		B1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.cargoShip));
 
-			// LB2.whenPressed(new ToggleIntake(ToggleType.CLOSE));
-			// RB2.whenPressed(new ToggleIntake(ToggleType.OPEN));
-			
-			// Start2.whenPressed(new ResetSensors());
-		}
+		// LB1.whenPressed(new SetCurrentLimiting());
+		// RB1.whenPressed(new SetCurrentLimiting());
+
+		Start1.whenPressed(new ResetSensors());
+
+		Back1.whenPressed(new RunMotionProfile(new Forward2MP()));
 	
-		if (!testingStick.getName().equals("") || DriverStation.getInstance().getMatchType() != MatchType.None) {
-			// A3 = new JoystickButton(testingStick, RobotMap.Control.Standard.a);
-			// B3 = new JoystickButton(testingStick, RobotMap.Control.Standard.b);
-			// X3 = new JoystickButton(testingStick, RobotMap.Control.Standard.x);
-			// Y3 = new JoystickButton(testingStick, RobotMap.Control.Standard.y);
+		A2 = new JoystickButton(controlStick, RobotMap.Control.Standard.a);
+		B2 = new JoystickButton(controlStick, RobotMap.Control.Standard.b);
+		X2 = new JoystickButton(controlStick, RobotMap.Control.Standard.x);
+		Y2 = new JoystickButton(controlStick, RobotMap.Control.Standard.y);
+	
+		// LB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.leftBumper);
+		// RB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.rightBumper);
+
+		Start2 = new JoystickButton(controlStick, RobotMap.Control.Standard.start);	
+
+		A2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.ground));
+		X2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.depot));
+		Y2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.rocketPort));
+		B2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.cargoShip));
+
+		// LB2.whenPressed(new ToggleIntake(ToggleType.CLOSE));
+		// RB2.whenPressed(new ToggleIntake(ToggleType.OPEN));
 		
-			// LB3 = new JoystickButton(testingStick, RobotMap.Control.Standard.leftBumper);
-			// RB3 = new JoystickButton(testingStick, RobotMap.Control.Standard.rightBumper);
+		Start2.whenPressed(new ResetSensors());
+	
+		// A3 = new JoystickButton(testingStick, RobotMap.Control.Standard.a);
+		// B3 = new JoystickButton(testingStick, RobotMap.Control.Standard.b);
+		// X3 = new JoystickButton(testingStick, RobotMap.Control.Standard.x);
+		// Y3 = new JoystickButton(testingStick, RobotMap.Control.Standard.y);
+	
+		// LB3 = new JoystickButton(testingStick, RobotMap.Control.Standard.leftBumper);
+		// RB3 = new JoystickButton(testingStick, RobotMap.Control.Standard.rightBumper);
 
-			// Start3 = new JoystickButton(testingStick, RobotMap.Control.Standard.start);
+		// Start3 = new JoystickButton(testingStick, RobotMap.Control.Standard.start);
 
-			// A3.whenPressed(new Move(-60.0));
-			// Y3.whenPressed(new Move(60.0));
-			// X3.whenPressed(new RotateLong(-135.0));
-			// B3.whenPressed(new RotateLong(135.0));
+		// A3.whenPressed(new Move(-60.0));
+		// Y3.whenPressed(new Move(60.0));
+		// X3.whenPressed(new RotateLong(-135.0));
+		// B3.whenPressed(new RotateLong(135.0));
 
-			// LB3.whenPressed(new Rotate(-45.0)); // Left
-			// RB3.whenPressed(new Rotate(45.0)); // Right
-			
-			// Start3.whenPressed(new ResetSensors());
-		}
+		// LB3.whenPressed(new Rotate(-45.0)); // Left
+		// RB3.whenPressed(new Rotate(45.0)); // Right
+		
+		// Start3.whenPressed(new ResetSensors());
 		
 	}
 	
@@ -199,6 +193,8 @@ public class OI {
 // 		double rightX = controlStick.getRawAxis(RobotMap.Control.Standard.rightX);
 		double rightY = controlStick.getRawAxis(RobotMap.Control.Standard.rightY);
 
+		rightY += RobotMap.Elevator.Speed.kOffsetInput;
+
 		return normalized(rightY);
 
 	}
@@ -210,7 +206,10 @@ public class OI {
 // 		double rightX = controlStick.getRawAxis(RobotMap.Control.Standard.rightX);
 // 		double rightY = controlStick.getRawAxis(RobotMap.Control.Standard.rightY);
 
-		return normalized(leftY);
+		double leftTrigger = driveStick.getRawAxis(RobotMap.Control.Standard.leftTrigger);
+		double rightTrigger = driveStick.getRawAxis(RobotMap.Control.Standard.rightTrigger);
+
+		return normalized(leftY + leftTrigger - rightTrigger);
 
 	}
 	

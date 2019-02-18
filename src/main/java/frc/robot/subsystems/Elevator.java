@@ -28,6 +28,7 @@ public class Elevator extends Subsystem {
   private ArrayList<TalonSRX> elevatorMotors = new ArrayList<>();
 
   private double currentTargetPosition = 0;
+  private boolean motionMagicMode = false;
 
   public Elevator() {
 
@@ -58,7 +59,7 @@ public class Elevator extends Subsystem {
     stopMoving();
 
     leftElevator.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-    leftElevator.setSensorPhase(true); 
+    leftElevator.setSensorPhase(false); 
     
 		leftElevator.config_kF(0, RobotMap.Elevator.MotionControl.kFeedForward, RobotMap.Elevator.MotionControl.kTimeoutMs);
 		leftElevator.config_kP(0, RobotMap.Elevator.MotionControl.kP, RobotMap.Elevator.MotionControl.kTimeoutMs);
@@ -79,32 +80,84 @@ public class Elevator extends Subsystem {
   }
 
   public void elevatorControl() {
+
     double operatorInput = OI.getElevatorScheme();
 
+    // if (OI.controlStick.getRawButton(RobotMap.Control.Standard.leftBumper)) {
+
+    //   leftElevator.config_kP(0, SmartDashboard.getNumber("Elevator P", 0.3), RobotMap.Elevator.MotionControl.kTimeoutMs);
+    //   leftElevator.config_kI(0, SmartDashboard.getNumber("Elevator I", 0.0), RobotMap.Elevator.MotionControl.kTimeoutMs);
+    //   leftElevator.config_kD(0, SmartDashboard.getNumber("Elevator D", 0.0), RobotMap.Elevator.MotionControl.kTimeoutMs);
+      
+    // }
+
     if (Math.abs(operatorInput) > 0) {
-      leftElevator.set(ControlMode.PercentOutput, operatorInput);
-      currentTargetPosition = getSensorPosition();
-    }
-    else {
-      leftElevator.set(ControlMode.MotionMagic, currentTargetPosition);
+      motionMagicMode = false;
     }
 
+    if (motionMagicMode) {
+      leftElevator.set(ControlMode.MotionMagic, currentTargetPosition);
+    }
+    else {
+      if (Math.abs(operatorInput) > 0) {
+        leftElevator.set(ControlMode.PercentOutput, operatorInput);
+      }
+      else {
+        leftElevator.set(ControlMode.PercentOutput, RobotMap.Elevator.Speed.kBrake);
+      }
+    }
+
+    // if (OI.controlStick.getRawButton(RobotMap.Control.Standard.rightBumper)) {
+
+    //   leftElevator.set(ControlMode.MotionMagic, currentTargetPosition);
+
+    // }
+    // else {
+
+    //   leftElevator.set(ControlMode.PercentOutput, operatorInput);
+
+    //   if (Math.abs(operatorInput) > 0) {
+    //     currentTargetPosition = getSensorPosition();
+    //   }
+
+    // }
+    
+  }
+
+  public double getElevator() {
+    return leftElevator.getMotorOutputPercent();
   }
 
   public void stopMoving() {
     leftElevator.set(ControlMode.PercentOutput, 0.0);
   }
 
-  public void setTargetPosition(double targetPos) {
-    currentTargetPosition = targetPos;
+  public void setTargetPosition(double targetPosInInches) {
+    currentTargetPosition = -targetPosInInches/RobotMap.Elevator.MotionControl.kEncoderInchesPerCount;
+    motionMagicMode = true;
+  }
+
+  public double getTargetPosition() {
+    return currentTargetPosition;
+  }
+
+  public double getTargetPositionInInches() {
+    return currentTargetPosition * RobotMap.Elevator.MotionControl.kEncoderInchesPerCount;
   }
 
   public double getSensorPosition() {
-		return leftElevator.getSelectedSensorPosition(0) * RobotMap.Elevator.MotionControl.kEncoderCountsToInches;
-	}
+    return leftElevator.getSelectedSensorPosition(0);
+  }
+
+  public double getSensorPositionInInches() {
+    return leftElevator.getSelectedSensorPosition(0) * RobotMap.Elevator.MotionControl.kEncoderInchesPerCount;
+  }
+
+  public double getSensorVelocity() {
+    return leftElevator.getSelectedSensorVelocity(0);
+  }
 
   public void resetSensors() {
-		leftElevator.setSelectedSensorPosition(0, 0, 0);
 		leftElevator.setSelectedSensorPosition(0, 0, 0);
 	}
 

@@ -57,6 +57,7 @@ public class Robot extends TimedRobot {
     intake = new Intake();
     gyro = new Gyroscope();
     ultrasonic = new UltrasonicSensor();
+    camera = new Camera();
     oi = new OI();
     auto = new Auto();
     logger = new Logger();

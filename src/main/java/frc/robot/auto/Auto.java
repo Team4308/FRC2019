@@ -13,7 +13,7 @@ public class Auto {
     public Auto() {
         m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
         m_chooser.addOption("My Auto", kCustomAuto);
-        SmartDashboard.putData("Auto choices", m_chooser);
+        // SmartDashboard.putData("Auto choices", m_chooser);
     }
 
     public void initAuto() {

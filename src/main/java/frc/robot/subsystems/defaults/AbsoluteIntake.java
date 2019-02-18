@@ -12,6 +12,10 @@ import frc.robot.Robot;
 
 public class AbsoluteIntake extends Command {
 
+	public AbsoluteIntake() {
+		requires(Robot.intake);
+	}
+
   protected void execute() {
 		Robot.intake.intakeControl();
 	}
