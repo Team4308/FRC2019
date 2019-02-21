@@ -9,10 +9,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.GetLog;
 import frc.robot.commands.ResetSensors;
 import frc.robot.commands.SetElevatorPosition;
 import frc.robot.motionprofiling.RunMotionProfile;
-import frc.robot.motionprofiling.profiles.Forward2MP;
+import frc.robot.motionprofiling.profiles.*;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -22,15 +23,15 @@ public class OI {
 	
 	public static Joystick driveStick;
 	public static Joystick controlStick;
-	public static Joystick testingStick;
+	// public static Joystick testingStick;
 
 	private JoystickButton A1;
 	private JoystickButton B1;
 	private JoystickButton X1;
 	private JoystickButton Y1;
 	
-	// private JoystickButton LB1;
-	// private JoystickButton RB1;
+	private JoystickButton LB1;
+	private JoystickButton RB1;
 
 	private JoystickButton Start1;
 	private JoystickButton Back1;
@@ -59,15 +60,15 @@ public class OI {
 
 		driveStick = new Joystick(RobotMap.Control.driveStick);
 		controlStick = new Joystick(RobotMap.Control.controlStick);
-		testingStick = new Joystick(RobotMap.Control.testingStick);
+		// testingStick = new Joystick(RobotMap.Control.testingStick);
 
 		A1 = new JoystickButton(driveStick, RobotMap.Control.Standard.a);
 		B1 = new JoystickButton(driveStick, RobotMap.Control.Standard.b);
 		X1 = new JoystickButton(driveStick, RobotMap.Control.Standard.x);
 		Y1 = new JoystickButton(driveStick, RobotMap.Control.Standard.y);
 		
-		// LB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.leftBumper);
-		// RB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.rightBumper);
+		LB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.leftBumper);
+		RB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.rightBumper);
 
 		Start1 = new JoystickButton(driveStick, RobotMap.Control.Standard.start);
 		Back1 = new JoystickButton(driveStick, RobotMap.Control.Standard.back);
@@ -77,12 +78,12 @@ public class OI {
 		Y1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.rocketPort));
 		B1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.cargoShip));
 
-		// LB1.whenPressed(new SetCurrentLimiting());
-		// RB1.whenPressed(new SetCurrentLimiting());
+		LB1.whenPressed(new RunMotionProfile(new TurnLeftReverseMP()));
+		RB1.whenPressed(new RunMotionProfile(new TestMP()));
 
 		Start1.whenPressed(new ResetSensors());
 
-		Back1.whenPressed(new RunMotionProfile(new Forward2MP()));
+		Back1.whenPressed(new GetLog());
 	
 		A2 = new JoystickButton(controlStick, RobotMap.Control.Standard.a);
 		B2 = new JoystickButton(controlStick, RobotMap.Control.Standard.b);

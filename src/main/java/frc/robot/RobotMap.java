@@ -24,7 +24,6 @@ public class RobotMap {
 	public static class Control {
 
 		public static final double kInputDeadband = 0.065;
-		public static final double kLargeInputDeadband = 0.1;
 
 		public static final int driveStick = 0;
 		public static final int controlStick = 1;
@@ -64,7 +63,7 @@ public class RobotMap {
 
 		public static class Speed {
 
-			public static final double kDeadband = 0.05;
+			public static final double kDeadband = 0.01;
 			public static final double kSpeedNormal = 1.0;
 			public static final double kSpeedSlow = 0.42;
 
@@ -90,24 +89,26 @@ public class RobotMap {
 			public static final int kTrajectoryPeriod = 10; // Motion profile traj period on init
 			public static final int kTimeoutMs = 30;
 
-			public static final double kLeftFeedForward = 2.4241706161; //422u/100ms max velocity
-			public static final double kLeftP = 2.0;
+			public static final double kLeftFeedForward = 2.4; // (0.24) 1023/422 -> 422u/100ms max velocity
+			public static final double kLeftP = 2.4;
 			public static final double kLeftI = 0.0;
-			public static final double kLeftD = 20.0;
-			public static final double kRightFeedForward = 2.5321782178; //404u/100ms max velocity
-			public static final double kRightP = 2.0;
+			public static final double kLeftD = 24.0;
+			public static final double kRightFeedForward = 2.4; // 1023/404 -> 404u/100ms max velocity
+			public static final double kRightP = 2.4;
 			public static final double kRightI = 0.0;
-			public static final double kRightD = 20.0;
+			public static final double kRightD = 24.0;
+
+			public static final double kExtraTime = 4.0;  // 0.75
 			
 		}
 
 		public static class Pathfinder {
 
 			public static final double kTimeStep = 0.010; // 10 ms
-			public static final double kMaxVelocity = 4; // 4 ft/s
-			public static final double kMaxAcceleration = 6; // 6 ft/s/s
-			public static final double kMaxJerk = 60; // 60 ft/s/s/s
-			public static final double kWheelBase = 2.08; // 2 ft 1 in
+			public static final double kMaxVelocity = 8; // ft/s
+			public static final double kMaxAcceleration = 10; // ft/s/s
+			public static final double kMaxJerk = 30; // ft/s/s/s
+			public static final double kWheelBase = 2.4; // ft
 
 		}
 
@@ -120,7 +121,7 @@ public class RobotMap {
 
 		public static class Speed {
 
-			public static final double kDeadband = 0.05;
+			public static final double kDeadband = 0.01;
 			public static final double kBrake = -0.06;
 			public static final double kOffsetInput = -0.09;
 			public static final double kSpeedNormal = 1.0;
@@ -175,7 +176,7 @@ public class RobotMap {
 
 		public static class Speed {
 
-			public static final double kDeadband = 0.05;
+			public static final double kDeadband = 0.01;
 			public static final double kSpeedNormal = 1.0;
 			public static final double kSpeedSlow = 0.42;
 

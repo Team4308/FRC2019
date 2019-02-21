@@ -243,12 +243,12 @@ public class MPRunner {
 
 			/* Get the motion profile status every loop */
 			_talon.getMotionProfileStatus(_status);
-			_heading = _talon.getActiveTrajectoryPosition(1);
+			// _heading = _talon.getActiveTrajectoryHeading();
 			_pos = _talon.getActiveTrajectoryPosition();
 			_vel = _talon.getActiveTrajectoryVelocity();
 
 			/* printfs and/or logging */
-			Instrumentation.process(_status, _pos, _vel, _heading);
+			Instrumentation.process(_status, _pos, _vel, 0);
 		}
 	}
 	/** Start filling the MPs to all of the involved Talons. */

@@ -1,10 +1,11 @@
 package frc.robot.motionprofiling;
 
 import com.ctre.phoenix.motion.SetValueMotionProfile;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import frc.robot.OI;
 import frc.robot.Robot;
-
+import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class RunMotionProfile extends Command {
@@ -27,13 +28,26 @@ public class RunMotionProfile extends Command {
     protected void initialize() {
         Robot.drive.resetSensors();
 
-        setTimeout(_profile.kNumPoints()*_profile.kTimeStep());
+        setTimeout(_profile.kNumPoints()*_profile.kTimeStep() + RobotMap.Drive.MotionControl.kExtraTime);
 
-		leftProfile = new MPRunner(Robot.drive.getLeftTalon(), _profile.kNumPoints(), _profile.leftPoints(), _profile.bForward());
-		rightProfile = new MPRunner(Robot.drive.getRightTalon(), _profile.kNumPoints(), _profile.rightPoints(), _profile.bForward());
+        TalonSRX leftTalon = Robot.drive.getLeftTalon();
+        TalonSRX rightTalon = Robot.drive.getRightTalon();
+
+        // if (_profile.bForward()) {
+        //     leftTalon = Robot.drive.getLeftTalon();
+        //     rightTalon = Robot.drive.getRightTalon();
+        // }
+        // else {
+        //     leftTalon = Robot.drive.getRightTalon();
+        //     rightTalon = Robot.drive.getLeftTalon();
+        // }
+
+        leftProfile = new MPRunner(leftTalon, _profile.kNumPoints(), _profile.leftPoints(), _profile.bForward());
+        rightProfile = new MPRunner(rightTalon, _profile.kNumPoints(), _profile.rightPoints(), _profile.bForward());
     
         leftProfile.startMotionProfile();
         rightProfile.startMotionProfile();
+
     }
     
     @Override

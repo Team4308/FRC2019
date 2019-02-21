@@ -12,9 +12,11 @@ import java.util.ArrayList;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.defaults.AbsoluteDrive;
@@ -86,6 +88,7 @@ public class Drivetrain extends Subsystem {
 		frontLeft.config_kI(0, RobotMap.Drive.MotionControl.kLeftI, RobotMap.Drive.MotionControl.kTimeoutMs);
 		frontLeft.config_kD(0, RobotMap.Drive.MotionControl.kLeftD, RobotMap.Drive.MotionControl.kTimeoutMs);
 		frontLeft.configMotionProfileTrajectoryPeriod(RobotMap.Drive.MotionControl.kTrajectoryPeriod, RobotMap.Drive.MotionControl.kTimeoutMs); 
+		// frontLeft.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.Drive.MotionControl.kTimeoutMs);
 
 
 		frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
@@ -96,7 +99,9 @@ public class Drivetrain extends Subsystem {
 		frontRight.config_kI(0, RobotMap.Drive.MotionControl.kRightI, RobotMap.Drive.MotionControl.kTimeoutMs);
 		frontRight.config_kD(0, RobotMap.Drive.MotionControl.kRightD, RobotMap.Drive.MotionControl.kTimeoutMs);
 		frontRight.configMotionProfileTrajectoryPeriod(RobotMap.Drive.MotionControl.kTrajectoryPeriod, RobotMap.Drive.MotionControl.kTimeoutMs); 
-  
+    // frontRight.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.Drive.MotionControl.kTimeoutMs);
+
+
     resetSensors();
 
   }
@@ -116,10 +121,20 @@ public class Drivetrain extends Subsystem {
   }
 
   public void driveControl() {
-    double operatorInputLeft = OI.getDriveSchemeLeft();
-    double operatorInputRight = OI.getDriveSchemeRight();
+    // if (OI.driveStick.getRawButton(RobotMap.Control.Standard.leftBumper)) {
+    //   System.out.println("Reset" + SmartDashboard.getNumber("Drive P", RobotMap.Drive.MotionControl.kLeftP));
 
-    setDrive(operatorInputLeft, operatorInputRight);
+    //   frontLeft.config_kP(0, SmartDashboard.getNumber("Drive P", RobotMap.Drive.MotionControl.kLeftP), RobotMap.Drive.MotionControl.kTimeoutMs);
+		//   frontLeft.config_kI(0, SmartDashboard.getNumber("Drive I", RobotMap.Drive.MotionControl.kLeftI), RobotMap.Drive.MotionControl.kTimeoutMs);
+		//   frontLeft.config_kD(0, SmartDashboard.getNumber("Drive D", RobotMap.Drive.MotionControl.kLeftD), RobotMap.Drive.MotionControl.kTimeoutMs);
+    
+    //   frontRight.config_kP(0, SmartDashboard.getNumber("Drive P", RobotMap.Drive.MotionControl.kRightP), RobotMap.Drive.MotionControl.kTimeoutMs);
+		//   frontRight.config_kI(0, SmartDashboard.getNumber("Drive I", RobotMap.Drive.MotionControl.kRightI), RobotMap.Drive.MotionControl.kTimeoutMs);
+		//   frontRight.config_kD(0, SmartDashboard.getNumber("Drive D", RobotMap.Drive.MotionControl.kRightD), RobotMap.Drive.MotionControl.kTimeoutMs);
+    // }
+
+
+    setDrive(OI.getDriveSchemeLeft(), OI.getDriveSchemeRight());
   }
 
   public void setDrive(double left, double right) {

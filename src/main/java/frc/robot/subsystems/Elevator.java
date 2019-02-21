@@ -83,14 +83,6 @@ public class Elevator extends Subsystem {
 
     double operatorInput = OI.getElevatorScheme();
 
-    // if (OI.controlStick.getRawButton(RobotMap.Control.Standard.leftBumper)) {
-
-    //   leftElevator.config_kP(0, SmartDashboard.getNumber("Elevator P", 0.3), RobotMap.Elevator.MotionControl.kTimeoutMs);
-    //   leftElevator.config_kI(0, SmartDashboard.getNumber("Elevator I", 0.0), RobotMap.Elevator.MotionControl.kTimeoutMs);
-    //   leftElevator.config_kD(0, SmartDashboard.getNumber("Elevator D", 0.0), RobotMap.Elevator.MotionControl.kTimeoutMs);
-      
-    // }
-
     if (Math.abs(operatorInput) > 0) {
       motionMagicMode = false;
     }
@@ -106,21 +98,6 @@ public class Elevator extends Subsystem {
         leftElevator.set(ControlMode.PercentOutput, RobotMap.Elevator.Speed.kBrake);
       }
     }
-
-    // if (OI.controlStick.getRawButton(RobotMap.Control.Standard.rightBumper)) {
-
-    //   leftElevator.set(ControlMode.MotionMagic, currentTargetPosition);
-
-    // }
-    // else {
-
-    //   leftElevator.set(ControlMode.PercentOutput, operatorInput);
-
-    //   if (Math.abs(operatorInput) > 0) {
-    //     currentTargetPosition = getSensorPosition();
-    //   }
-
-    // }
     
   }
 
