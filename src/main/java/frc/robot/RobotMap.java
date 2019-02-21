@@ -104,6 +104,7 @@ public class RobotMap {
 
 		public static class Pathfinder {
 
+			public static final double kWheelDiameter = 8.4; // inches
 			public static final double kTimeStep = 0.010; // 10 ms
 			public static final double kMaxVelocity = 8; // ft/s
 			public static final double kMaxAcceleration = 10; // ft/s/s

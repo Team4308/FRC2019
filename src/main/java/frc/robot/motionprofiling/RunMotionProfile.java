@@ -76,7 +76,8 @@ public class RunMotionProfile extends Command {
     
     @Override
 	protected void interrupted() {
-		end();
+        leftProfile.reset();
+        rightProfile.reset();
 	}
 
 }

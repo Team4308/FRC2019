@@ -69,8 +69,8 @@ public class CreatePath {
     {			
       Segment seg = leftTrajectory.get(i);
 
-      leftPoints[i] = new double[] {seg.position*(12/RobotMap.Drive.MotionControl.kWheelDiameter*Math.PI),
-                                    seg.velocity*(12/RobotMap.Drive.MotionControl.kWheelDiameter*Math.PI)*60,
+      leftPoints[i] = new double[] {seg.position*(12/RobotMap.Drive.Pathfinder.kWheelDiameter*Math.PI),
+                                    seg.velocity*(12/RobotMap.Drive.Pathfinder.kWheelDiameter*Math.PI)*60,
                                     (int) seg.dt*1000};
     
     }
@@ -81,8 +81,8 @@ public class CreatePath {
     {			
       Segment seg = rightTrajectory.get(i);
 
-      rightPoints[i] = new double[] {seg.position*(12/RobotMap.Drive.MotionControl.kWheelDiameter*Math.PI),
-                                    seg.velocity*(12/RobotMap.Drive.MotionControl.kWheelDiameter*Math.PI)*60,
+      rightPoints[i] = new double[] {seg.position*(12/RobotMap.Drive.Pathfinder.kWheelDiameter*Math.PI),
+                                    seg.velocity*(12/RobotMap.Drive.Pathfinder.kWheelDiameter*Math.PI)*60,
                                     (int) seg.dt*1000};
     
     }
