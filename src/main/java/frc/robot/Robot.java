@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import frc.robot.auto.Auto;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -28,17 +27,19 @@ import frc.robot.subsystems.sensors.UltrasonicSensor;
  * project.
  */
 public class Robot extends TimedRobot {
+  public static PowerDistributionPanel pdp;
+  public static Compressor compressor;
+
   public static Drivetrain drive;
   public static Elevator elevator;
   public static Intake intake;
+
   public static Gyroscope gyro;
   public static UltrasonicSensor ultrasonic;
   public static Camera camera;
+
   public static OI oi;
-  public static Auto auto;
   public static Logger logger;
-  public static PowerDistributionPanel pdp;
-  public static Compressor compressor;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -55,11 +56,12 @@ public class Robot extends TimedRobot {
     drive = new Drivetrain();
     elevator = new Elevator();
     intake = new Intake();
+
     gyro = new Gyroscope();
     ultrasonic = new UltrasonicSensor();
-    // camera = new Camera();
+    camera = new Camera();
+
     oi = new OI();
-    // auto = new Auto();
     logger = new Logger();
 
   }
@@ -75,10 +77,12 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     logger.log();
+    gyro.gyroControl();
   }
 
   @Override
   public void autonomousInit() {
+    
     // auto.initAuto();
     
   }
@@ -88,6 +92,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    drive.driveControl();
+    elevator.elevatorControl();
+    intake.intakeControl();
+
     Scheduler.getInstance().run();
     // auto.periodicAuto();
   }
@@ -103,6 +111,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    drive.driveControl();
+    elevator.elevatorControl();
+    intake.intakeControl();
+
     Scheduler.getInstance().run();
   }
 

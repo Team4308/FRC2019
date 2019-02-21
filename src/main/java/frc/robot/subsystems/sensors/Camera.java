@@ -9,13 +9,12 @@ package frc.robot.subsystems.sensors;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class Camera extends Subsystem {
+public class Camera {
   
   private NetworkTable table;
 
@@ -24,12 +23,6 @@ public class Camera extends Subsystem {
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
     table = inst.getTable(RobotMap.Sensors.Camera.cameraTableKey);
 
-  }
-
-  @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
   }
 
   public double getTapeYaw() {

@@ -12,22 +12,15 @@ import java.util.ArrayList;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.defaults.AbsoluteDrive;
+// import frc.robot.subsystems.defaults.AbsoluteDrive;
 
 
-/**
- * An example subsystem.  You can replace me with your own Subsystem.
- */
 public class Drivetrain extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
 
   private TalonSRX frontLeft, frontRight, backLeft, backRight, topLeft, topRight;
 
@@ -117,7 +110,7 @@ public class Drivetrain extends Subsystem {
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
-    setDefaultCommand(new AbsoluteDrive());
+    // setDefaultCommand(new AbsoluteDrive());
   }
 
   public void driveControl() {

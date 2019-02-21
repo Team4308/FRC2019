@@ -17,7 +17,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.OI;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.defaults.AbsoluteElevator;
+// import frc.robot.subsystems.defaults.AbsoluteElevator;
 
 /**
  * Add your docs here.
@@ -76,7 +76,7 @@ public class Elevator extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new AbsoluteElevator());
+    // setDefaultCommand(new AbsoluteElevator());
   }
 
   public void elevatorControl() {

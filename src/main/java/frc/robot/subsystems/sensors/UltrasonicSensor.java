@@ -8,13 +8,12 @@
 package frc.robot.subsystems.sensors;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
-public class UltrasonicSensor extends Subsystem {
+public class UltrasonicSensor {
 
   private AnalogInput ultrasensor;
 
@@ -24,11 +23,6 @@ public class UltrasonicSensor extends Subsystem {
 
   public double getDistance() {
     return ultrasensor.getVoltage()*RobotMap.Sensors.UltrasonicSensor.kUltrasonicVoltageToInches;
-  }
-
-  @Override
-  public void initDefaultCommand() {
-    // setDefaultCommand(new ____);
   }
 
 }

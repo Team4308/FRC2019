@@ -14,7 +14,6 @@ public class ResetSensors extends Command {
 
 	public ResetSensors() {
         requires(Robot.drive);
-		requires(Robot.gyro);
 		requires(Robot.elevator);
 	}
 
@@ -22,8 +21,8 @@ public class ResetSensors extends Command {
 	@Override
 	protected void initialize() {
 		Robot.drive.resetSensors();
-		Robot.gyro.resetSensors();
 		Robot.elevator.resetSensors();
+		Robot.gyro.resetSensors();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

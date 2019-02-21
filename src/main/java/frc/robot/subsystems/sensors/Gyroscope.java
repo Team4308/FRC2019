@@ -3,26 +3,18 @@ package frc.robot.subsystems.sensors;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.defaults.AbsoluteGyroscope;
 
-public class Gyroscope extends Subsystem {
+public class Gyroscope {
 
 	private AHRS navx;
 	private double drift;
 
-	
 	public Gyroscope() {
 		navx = new AHRS(SPI.Port.kMXP);
 		drift = 0;
 
 		resetSensors();
-	}
-	
-	@Override
-	protected void initDefaultCommand() {
-		setDefaultCommand(new AbsoluteGyroscope());
 	}
 
 	public void gyroControl() {

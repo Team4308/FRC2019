@@ -196,7 +196,7 @@ public class RobotMap {
 	public static class Sensors {
 
 		public static class Gyro {
-			public static final double kAngleDrift = 0.00001;
+			public static final double kAngleDrift = 0.0001;
 		}
 
 		public static class UltrasonicSensor {

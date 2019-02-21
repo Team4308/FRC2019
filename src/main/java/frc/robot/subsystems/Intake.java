@@ -13,7 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
-import frc.robot.subsystems.defaults.AbsoluteIntake;
+// import frc.robot.subsystems.defaults.AbsoluteIntake;
 import frc.robot.OI;
 
 /**
@@ -45,7 +45,7 @@ public class Intake extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new AbsoluteIntake());
+    // setDefaultCommand(new AbsoluteIntake());
   }
 
   public void intakeControl() {
