@@ -7,17 +7,25 @@
 
 package frc.robot;
 
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import frc.robot.subsystems.HatchGrabber;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.sensors.Camera;
 import frc.robot.subsystems.sensors.Gyroscope;
-import frc.robot.subsystems.sensors.UltrasonicSensor;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -33,9 +41,11 @@ public class Robot extends TimedRobot {
   public static Drivetrain drive;
   public static Elevator elevator;
   public static Intake intake;
+  public static Arm arm;
+  public static HatchGrabber hatchGrabber;
 
   public static Gyroscope gyro;
-  public static UltrasonicSensor ultrasonic;
+  // public static UltrasonicSensor ultrasonic;
   public static Camera camera;
 
   public static OI oi;
@@ -52,21 +62,45 @@ public class Robot extends TimedRobot {
     LiveWindow.disableAllTelemetry();
 
     compressor = new Compressor(RobotMap.PCM_ID);
-    
+    compressor.setClosedLoopControl(true);
+
     drive = new Drivetrain();
     elevator = new Elevator();
     intake = new Intake();
+    arm = new Arm();
+    hatchGrabber = new HatchGrabber();
 
     gyro = new Gyroscope();
-    ultrasonic = new UltrasonicSensor();
+    // ultrasonic = new UltrasonicSensor();
     camera = new Camera();
 
     oi = new OI();
     logger = new Logger();
 
+    new Thread(() -> {
+      UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+      camera.setResolution(320, 180);
+      
+      CvSink cvSink = CameraServer.getInstance().getVideo();
+      CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 320, 180);
+      
+      Mat source = new Mat();
+      Mat output = new Mat();
+      
+      while(!Thread.interrupted()) {
+        if (CameraServer.getInstance() != null) {
+          cvSink.grabFrame(source);
+          if (!source.empty()) {
+            Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+            outputStream.putFrame(output);
+          }
+        }
+      }
+    }).start();
+
   }
 
-  /**
+  /*
    * This function is called every robot packet, no matter the mode. Use
    * this for items like diagnostics that you want ran during disabled,
    * autonomous, teleoperated and test.
@@ -95,6 +129,7 @@ public class Robot extends TimedRobot {
     drive.driveControl();
     elevator.elevatorControl();
     intake.intakeControl();
+    arm.armControl();
 
     Scheduler.getInstance().run();
     // auto.periodicAuto();
@@ -114,6 +149,7 @@ public class Robot extends TimedRobot {
     drive.driveControl();
     elevator.elevatorControl();
     intake.intakeControl();
+    arm.armControl();
 
     Scheduler.getInstance().run();
   }

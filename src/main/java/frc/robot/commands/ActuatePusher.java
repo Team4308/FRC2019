@@ -10,25 +10,39 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class SetElevatorPosition extends Command {
+public class ActuatePusher extends Command {
 
-  private double targetPosition;
-
-  public SetElevatorPosition(double targetPosInInches) {
-    requires(Robot.elevator);
-
-    targetPosition = targetPosInInches;
+  public enum PusherAction {
+    PUSH, PULL, SWITCH, OFF
   }
 
-  // Called just before this Command runs the first time
-  @Override
-  protected void initialize() {
-    Robot.elevator.setTargetPosition(targetPosition);
+  private PusherAction action;
+
+  public ActuatePusher(PusherAction choose) {
+    requires(Robot.hatchGrabber);
+
+    action = choose;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+
+    switch(action) {
+      case SWITCH:
+        Robot.hatchGrabber.switchPusher();
+        break;
+      case PUSH:
+        Robot.hatchGrabber.pushHatch();
+        break;
+      case PULL:
+        Robot.hatchGrabber.pullHatch();
+        break;
+      case OFF:
+        Robot.hatchGrabber.pusherOff();
+        break;
+    }
+
   }
 
   // Make this return true when this Command no longer needs to run execute()

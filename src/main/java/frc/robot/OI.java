@@ -9,9 +9,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.ActuateClaw;
+import frc.robot.commands.ActuatePusher;
 import frc.robot.commands.GetLog;
 import frc.robot.commands.ResetSensors;
+import frc.robot.commands.SetArmPosition;
 import frc.robot.commands.SetElevatorPosition;
+import frc.robot.commands.ActuateClaw.ClawAction;
+import frc.robot.commands.ActuatePusher.PusherAction;
 import frc.robot.motionprofiling.RunMotionProfile;
 import frc.robot.motionprofiling.profiles.*;
 
@@ -25,10 +30,10 @@ public class OI {
 	public static Joystick controlStick;
 	// public static Joystick testingStick;
 
-	private JoystickButton A1;
-	private JoystickButton B1;
-	private JoystickButton X1;
-	private JoystickButton Y1;
+	// private JoystickButton A1;
+	// private JoystickButton B1;
+	// private JoystickButton X1;
+	// private JoystickButton Y1;
 	
 	private JoystickButton LB1;
 	private JoystickButton RB1;
@@ -41,8 +46,8 @@ public class OI {
 	private JoystickButton X2;
 	private JoystickButton Y2;
 	
-	// private JoystickButton LB2;
-	// private JoystickButton RB2;
+	private JoystickButton LB2;
+	private JoystickButton RB2;
 
 	private JoystickButton Start2;
 	
@@ -62,10 +67,10 @@ public class OI {
 		controlStick = new Joystick(RobotMap.Control.controlStick);
 		// testingStick = new Joystick(RobotMap.Control.testingStick);
 
-		A1 = new JoystickButton(driveStick, RobotMap.Control.Standard.a);
-		B1 = new JoystickButton(driveStick, RobotMap.Control.Standard.b);
-		X1 = new JoystickButton(driveStick, RobotMap.Control.Standard.x);
-		Y1 = new JoystickButton(driveStick, RobotMap.Control.Standard.y);
+		// A1 = new JoystickButton(driveStick, RobotMap.Control.Standard.a);
+		// B1 = new JoystickButton(driveStick, RobotMap.Control.Standard.b);
+		// X1 = new JoystickButton(driveStick, RobotMap.Control.Standard.x);
+		// Y1 = new JoystickButton(driveStick, RobotMap.Control.Standard.y);
 		
 		LB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.leftBumper);
 		RB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.rightBumper);
@@ -73,13 +78,13 @@ public class OI {
 		Start1 = new JoystickButton(driveStick, RobotMap.Control.Standard.start);
 		Back1 = new JoystickButton(driveStick, RobotMap.Control.Standard.back);
 
-		A1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.ground));
-		X1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.depot));
-		Y1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.rocketPort));
-		B1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.cargoShip));
+		// A1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.ground));
+		// X1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.depot));
+		// Y1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.rocketPort));
+		// B1.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.cargoShip));
 
-		LB1.whenPressed(new RunMotionProfile(new TurnLeftReverseMP()));
-		RB1.whenPressed(new RunMotionProfile(new TestMP()));
+		LB1.whenPressed(new ActuateClaw(ClawAction.SWITCH));
+		RB1.whenPressed(new ActuatePusher(PusherAction.SWITCH));
 
 		Start1.whenPressed(new ResetSensors());
 
@@ -90,8 +95,8 @@ public class OI {
 		X2 = new JoystickButton(controlStick, RobotMap.Control.Standard.x);
 		Y2 = new JoystickButton(controlStick, RobotMap.Control.Standard.y);
 	
-		// LB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.leftBumper);
-		// RB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.rightBumper);
+		LB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.leftBumper);
+		RB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.rightBumper);
 
 		Start2 = new JoystickButton(controlStick, RobotMap.Control.Standard.start);	
 
@@ -100,8 +105,8 @@ public class OI {
 		Y2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.rocketPort));
 		B2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.cargoShip));
 
-		// LB2.whenPressed(new ToggleIntake(ToggleType.CLOSE));
-		// RB2.whenPressed(new ToggleIntake(ToggleType.OPEN));
+		LB2.whenPressed(new SetArmPosition(RobotMap.Arm.Position.down));
+		RB2.whenPressed(new SetArmPosition(RobotMap.Arm.Position.down));
 		
 		Start2.whenPressed(new ResetSensors());
 	
@@ -143,7 +148,7 @@ public class OI {
 	public static double getDriveSchemeLeft() {
 		
 //		double leftX = driveStick.getRawAxis(RobotMap.Control.Standard.leftX);
-		double leftY = driveStick.getRawAxis(RobotMap.Control.Standard.leftY);
+		double leftY = -driveStick.getRawAxis(RobotMap.Control.Standard.leftY);
 		double rightX = driveStick.getRawAxis(RobotMap.Control.Standard.rightX);
 //		double rightY = driveStick.getRawAxis(RobotMap.Control.Standard.rightY);
 		
@@ -167,7 +172,7 @@ public class OI {
 	public static double getDriveSchemeRight() {
 		
 //		double leftX = driveStick.getRawAxis(RobotMap.Control.Standard.leftX);
-		double leftY = driveStick.getRawAxis(RobotMap.Control.Standard.leftY);
+		double leftY = -driveStick.getRawAxis(RobotMap.Control.Standard.leftY);
 		double rightX = driveStick.getRawAxis(RobotMap.Control.Standard.rightX);
 //		double rightY = driveStick.getRawAxis(RobotMap.Control.Standard.rightY);
 		
@@ -200,17 +205,28 @@ public class OI {
 
 	}
 
+	public static double getArmScheme() {
+
+		// double leftX = controlStick.getRawAxis(RobotMap.Control.Standard.leftX);
+		double leftY = controlStick.getRawAxis(RobotMap.Control.Standard.leftY);
+		// double rightX = controlStick.getRawAxis(RobotMap.Control.Standard.rightX);
+		// double rightY = controlStick.getRawAxis(RobotMap.Control.Standard.rightY);
+
+		return normalized(-leftY);
+
+	}
+
 	public static double getIntakeScheme() {
 
 //		double leftX = controlStick.getRawAxis(RobotMap.Control.Standard.leftX);
-		double leftY = controlStick.getRawAxis(RobotMap.Control.Standard.leftY);
+//		double leftY = controlStick.getRawAxis(RobotMap.Control.Standard.leftY);
 // 		double rightX = controlStick.getRawAxis(RobotMap.Control.Standard.rightX);
 // 		double rightY = controlStick.getRawAxis(RobotMap.Control.Standard.rightY);
 
-		double leftTrigger = driveStick.getRawAxis(RobotMap.Control.Standard.leftTrigger);
-		double rightTrigger = driveStick.getRawAxis(RobotMap.Control.Standard.rightTrigger);
+		double leftTrigger = controlStick.getRawAxis(RobotMap.Control.Standard.leftTrigger);  // Push out
+		double rightTrigger = controlStick.getRawAxis(RobotMap.Control.Standard.rightTrigger);  // Pull in
 
-		return normalized(leftY + leftTrigger - rightTrigger);
+		return normalized(leftTrigger - rightTrigger);
 
 	}
 	

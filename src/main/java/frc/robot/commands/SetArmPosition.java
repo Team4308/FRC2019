@@ -10,20 +10,20 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class SetElevatorPosition extends Command {
+public class SetArmPosition extends Command {
 
   private double targetPosition;
 
-  public SetElevatorPosition(double targetPosInInches) {
-    requires(Robot.elevator);
+  public SetArmPosition(double targetPosInDegrees) {
+    requires(Robot.arm);
 
-    targetPosition = targetPosInInches;
+    targetPosition = targetPosInDegrees;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.elevator.setTargetPosition(targetPosition);
+    Robot.arm.setTargetPosition(targetPosition);
   }
 
   // Called repeatedly when this Command is scheduled to run

@@ -55,6 +55,7 @@ public class Elevator extends Subsystem {
     }
 
     rightElevator.follow(leftElevator);
+    rightElevator.setInverted(true);
 
     stopMoving();
 
@@ -83,21 +84,21 @@ public class Elevator extends Subsystem {
 
     double operatorInput = OI.getElevatorScheme();
 
-    if (Math.abs(operatorInput) > 0) {
-      motionMagicMode = false;
-    }
+    // if (Math.abs(operatorInput) > 0) {
+    //   motionMagicMode = false;
+    // }
 
-    if (motionMagicMode) {
-      leftElevator.set(ControlMode.MotionMagic, currentTargetPosition);
-    }
-    else {
-      if (Math.abs(operatorInput) > 0) {
+    // if (motionMagicMode) {
+    //   leftElevator.set(ControlMode.MotionMagic, currentTargetPosition);
+    // }
+    // else {
+      // if (Math.abs(operatorInput) > 0) {
         leftElevator.set(ControlMode.PercentOutput, operatorInput);
-      }
-      else {
-        leftElevator.set(ControlMode.PercentOutput, RobotMap.Elevator.Speed.kBrake);
-      }
-    }
+      // }
+      // else {
+      //   leftElevator.set(ControlMode.PercentOutput, RobotMap.Elevator.Speed.kBrake);
+      // }
+    // }
     
   }
 

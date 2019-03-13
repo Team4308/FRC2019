@@ -15,7 +15,7 @@ package frc.robot;
  */
 public class RobotMap {
 
-	public static final int PCM_ID = 1;
+	public static final int PCM_ID = 0;
 	public static final int PDP_ID = 0;
 
 	public static final double kAutonomousTime = 15.0;
@@ -82,7 +82,7 @@ public class RobotMap {
 
 			public static final double kWheelDiameter = 8.4; // inches
 			public static final double kInchesPerRotation = 26.5;
-			public static final double kSensorUnitsPerRotation = 512; // Practice
+			public static final double kSensorUnitsPerRotation = 1024; // Practice is 512
 			public static final double kEncoderInchesPerCount = kInchesPerRotation/kSensorUnitsPerRotation;
 
 			public static final int kBaseTrajectoryPeriod = 0; // Base to add
@@ -117,13 +117,13 @@ public class RobotMap {
 
 	public static class Elevator {
 
-		public static final int left = 2;
+		public static final int left = 10;
 		public static final int right = 9;
 
 		public static class Speed {
 
 			public static final double kDeadband = 0.01;
-			public static final double kBrake = -0.06;
+			public static final double kBrake = -0.03;
 			public static final double kOffsetInput = -0.09;
 			public static final double kSpeedNormal = 1.0;
 			public static final double kSpeedSlow = 0.42;
@@ -171,6 +171,60 @@ public class RobotMap {
 
 	}
 
+	public static class Arm {
+
+		public static final int motor = 2;
+
+		public static class Speed {
+
+			public static final double kDeadband = 0.01;
+			public static final double kBrake = 0.06;
+			public static final double kOffsetInput = -0.09;
+			public static final double kSpeedNormal = 1.0;
+			public static final double kSpeedSlow = 0.42;
+
+		}
+
+		public static class Power {
+
+			public static final int kOpenloopRamp = 0;
+			public static final int kContinuousCurrentLimit = 35;
+			public static final int kPeakCurrentLimit = 35;
+			public static final int kPeakDuration = 100; 
+
+		}
+
+		public static class Position {
+
+			public static final double down = 0.0;
+			public static final double up = 90.0;
+
+		}
+
+		public static class MotionControl {
+
+			public static final double kDrivingGearTeeth = 20; // teeth
+			public static final double kDrivenGearTeeth = 72; // inches
+			public static final double kGearReduction = kDrivenGearTeeth/kDrivingGearTeeth;
+			public static final double kSensorUnitsPerRotation = 4096; 
+			public static final double kEncoderDegreesPerCount = 360*kSensorUnitsPerRotation/kGearReduction;
+
+			public static final int kBaseTrajectoryPeriod = 0; // Base to add
+			public static final int kTrajectoryPeriod = 10; // Motion profile traj period on init
+			public static final int kTimeoutMs = 30;
+
+			public static final double kFeedForward = 0.5115;
+			public static final double kP = 1.0;
+			public static final double kI = 0.0;
+			public static final double kD = 0.4;
+
+			public static final int kCruiseVelocity = 1000;
+			public static final int kAcceleration = 2000;
+			
+		}
+
+	}
+
 	public static class Intake {
 
 		public static final int motor = 3;
@@ -191,6 +245,15 @@ public class RobotMap {
 			public static final int kPeakDuration = 100; 
 
 		}
+
+	}
+
+	public static class HatchGrabber {
+		
+		public static final int solenoidClawIn = 4;
+		public static final int solenoidClawOut = 0;
+		public static final int solenoidPusherIn = 1;
+		public static final int solenoidPusherOut = 5;
 
 	}
 
