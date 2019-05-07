@@ -15,6 +15,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.OI;
 import frc.robot.RobotMap;
 // import frc.robot.subsystems.defaults.AbsoluteDrive;
@@ -25,6 +26,8 @@ public class Drivetrain extends Subsystem {
   private TalonSRX frontLeft, frontRight, backLeft, backRight, topLeft, topRight;
 
   private ArrayList<TalonSRX> driveMotors = new ArrayList<>();
+
+  private boolean motionProfileMode = false;
 
 
   public Drivetrain() {
@@ -82,7 +85,7 @@ public class Drivetrain extends Subsystem {
 		frontLeft.config_kD(0, RobotMap.Drive.MotionControl.kLeftD, RobotMap.Drive.MotionControl.kTimeoutMs);
 		frontLeft.configMotionProfileTrajectoryPeriod(RobotMap.Drive.MotionControl.kTrajectoryPeriod, RobotMap.Drive.MotionControl.kTimeoutMs); 
 		// frontLeft.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.Drive.MotionControl.kTimeoutMs);
-
+    frontLeft.selectProfileSlot(0, 0);
 
 		frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
     frontRight.setSensorPhase(false);
@@ -93,9 +96,11 @@ public class Drivetrain extends Subsystem {
 		frontRight.config_kD(0, RobotMap.Drive.MotionControl.kRightD, RobotMap.Drive.MotionControl.kTimeoutMs);
 		frontRight.configMotionProfileTrajectoryPeriod(RobotMap.Drive.MotionControl.kTrajectoryPeriod, RobotMap.Drive.MotionControl.kTimeoutMs); 
     // frontRight.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, RobotMap.Drive.MotionControl.kTimeoutMs);
-
+    frontRight.selectProfileSlot(0, 0);
 
     resetSensors();
+
+    motionProfileMode = false;
 
   }
 
@@ -114,20 +119,21 @@ public class Drivetrain extends Subsystem {
   }
 
   public void driveControl() {
-    // if (OI.driveStick.getRawButton(RobotMap.Control.Standard.leftBumper)) {
-    //   System.out.println("Reset" + SmartDashboard.getNumber("Drive P", RobotMap.Drive.MotionControl.kLeftP));
+    if (OI.driveStick.getRawButton(RobotMap.Control.Standard.start)) {
+      System.out.println("Reset" + SmartDashboard.getNumber("Drive P", RobotMap.Drive.MotionControl.kLeftP));
 
-    //   frontLeft.config_kP(0, SmartDashboard.getNumber("Drive P", RobotMap.Drive.MotionControl.kLeftP), RobotMap.Drive.MotionControl.kTimeoutMs);
-		//   frontLeft.config_kI(0, SmartDashboard.getNumber("Drive I", RobotMap.Drive.MotionControl.kLeftI), RobotMap.Drive.MotionControl.kTimeoutMs);
-		//   frontLeft.config_kD(0, SmartDashboard.getNumber("Drive D", RobotMap.Drive.MotionControl.kLeftD), RobotMap.Drive.MotionControl.kTimeoutMs);
+      frontLeft.config_kP(0, SmartDashboard.getNumber("Drive P", RobotMap.Drive.MotionControl.kLeftP), RobotMap.Drive.MotionControl.kTimeoutMs);
+		  frontLeft.config_kI(0, SmartDashboard.getNumber("Drive I", RobotMap.Drive.MotionControl.kLeftI), RobotMap.Drive.MotionControl.kTimeoutMs);
+		  frontLeft.config_kD(0, SmartDashboard.getNumber("Drive D", RobotMap.Drive.MotionControl.kLeftD), RobotMap.Drive.MotionControl.kTimeoutMs);
     
-    //   frontRight.config_kP(0, SmartDashboard.getNumber("Drive P", RobotMap.Drive.MotionControl.kRightP), RobotMap.Drive.MotionControl.kTimeoutMs);
-		//   frontRight.config_kI(0, SmartDashboard.getNumber("Drive I", RobotMap.Drive.MotionControl.kRightI), RobotMap.Drive.MotionControl.kTimeoutMs);
-		//   frontRight.config_kD(0, SmartDashboard.getNumber("Drive D", RobotMap.Drive.MotionControl.kRightD), RobotMap.Drive.MotionControl.kTimeoutMs);
-    // }
+      frontRight.config_kP(0, SmartDashboard.getNumber("Drive P", RobotMap.Drive.MotionControl.kRightP), RobotMap.Drive.MotionControl.kTimeoutMs);
+		  frontRight.config_kI(0, SmartDashboard.getNumber("Drive I", RobotMap.Drive.MotionControl.kRightI), RobotMap.Drive.MotionControl.kTimeoutMs);
+		  frontRight.config_kD(0, SmartDashboard.getNumber("Drive D", RobotMap.Drive.MotionControl.kRightD), RobotMap.Drive.MotionControl.kTimeoutMs);
+    }
 
-
-    setDrive(OI.getDriveSchemeLeft(), OI.getDriveSchemeRight());
+    if (!motionProfileMode) {
+      setDrive(OI.getDriveSchemeLeft(), OI.getDriveSchemeRight());
+    }
   }
 
   public void setDrive(double left, double right) {
@@ -136,6 +142,7 @@ public class Drivetrain extends Subsystem {
   }
 
   public void setMPDrive(double left, double right) {
+    motionProfileMode = true;
 		frontLeft.set(ControlMode.MotionProfile, left);
 		frontRight.set(ControlMode.MotionProfile, right);
 	}
@@ -149,6 +156,7 @@ public class Drivetrain extends Subsystem {
   }
 
   public void stopMoving() {
+    motionProfileMode = false;
     setDrive(0.0, 0.0);
   }
 

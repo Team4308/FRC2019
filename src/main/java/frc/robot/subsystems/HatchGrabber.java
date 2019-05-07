@@ -29,7 +29,9 @@ public class HatchGrabber extends Subsystem {
   public HatchGrabber() {
     solenoidClaw = new DoubleSolenoid(RobotMap.PCM_ID, RobotMap.HatchGrabber.solenoidClawOut, RobotMap.HatchGrabber.solenoidClawIn);
 		solenoidPusher = new DoubleSolenoid(RobotMap.PCM_ID, RobotMap.HatchGrabber.solenoidPusherOut, RobotMap.HatchGrabber.solenoidPusherIn);
-  }
+		grabHatch();
+		pullHatch();
+	}
 
   @Override
   public void initDefaultCommand() {

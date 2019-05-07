@@ -64,7 +64,7 @@ public class RunMotionProfile extends Command {
 
     @Override
 	protected boolean isFinished() {
-		return isTimedOut() || OI.getDriveSchemeLeft() > 0 || OI.getDriveSchemeRight() > 0;
+		return isTimedOut() || Math.abs(OI.getDriveSchemeLeft()) > 0 || Math.abs(OI.getDriveSchemeRight()) > 0;
 	}
     
     @Override
@@ -76,6 +76,7 @@ public class RunMotionProfile extends Command {
     
     @Override
 	protected void interrupted() {
+        Robot.drive.stopMoving();
         leftProfile.reset();
         rightProfile.reset();
 	}

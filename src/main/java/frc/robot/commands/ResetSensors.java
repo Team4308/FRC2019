@@ -15,6 +15,7 @@ public class ResetSensors extends Command {
 	public ResetSensors() {
         requires(Robot.drive);
 		requires(Robot.elevator);
+		requires(Robot.arm);
 	}
 
 	// Called just before this Command runs the first time
@@ -23,6 +24,7 @@ public class ResetSensors extends Command {
 		Robot.drive.resetSensors();
 		Robot.elevator.resetSensors();
 		Robot.gyro.resetSensors();
+		Robot.arm.resetSensors();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

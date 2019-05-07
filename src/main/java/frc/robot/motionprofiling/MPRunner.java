@@ -121,8 +121,8 @@ public class MPRunner {
 		 * since our MP is 10ms per point, set the control frame rate and the
 		 * notifer to half that
 		 */
-		_talon.changeMotionControlFramePeriod(5);
-		_notifer.startPeriodic(0.005);
+		_talon.changeMotionControlFramePeriod(25);
+		_notifer.startPeriodic(0.025);
 	}
 
 	/**

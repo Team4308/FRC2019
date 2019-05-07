@@ -73,6 +73,8 @@ public class Elevator extends Subsystem {
 
     resetSensors();
 
+    motionMagicMode = false;
+
   }
 
   @Override
@@ -84,21 +86,21 @@ public class Elevator extends Subsystem {
 
     double operatorInput = OI.getElevatorScheme();
 
-    // if (Math.abs(operatorInput) > 0) {
-    //   motionMagicMode = false;
-    // }
+    if (Math.abs(operatorInput) > 0) {
+      motionMagicMode = false;
+    }
 
-    // if (motionMagicMode) {
-    //   leftElevator.set(ControlMode.MotionMagic, currentTargetPosition);
-    // }
-    // else {
-      // if (Math.abs(operatorInput) > 0) {
+    if (motionMagicMode) {
+      leftElevator.set(ControlMode.MotionMagic, currentTargetPosition);
+    }
+    else {
+      if (Math.abs(operatorInput) > 0) {
         leftElevator.set(ControlMode.PercentOutput, operatorInput);
-      // }
-      // else {
-      //   leftElevator.set(ControlMode.PercentOutput, RobotMap.Elevator.Speed.kBrake);
-      // }
-    // }
+      }
+      else {
+        leftElevator.set(ControlMode.PercentOutput, RobotMap.Elevator.Speed.kBrake);
+      }
+    }
     
   }
 
@@ -136,7 +138,7 @@ public class Elevator extends Subsystem {
   }
 
   public void resetSensors() {
-		leftElevator.setSelectedSensorPosition(0, 0, 0);
+		leftElevator.setSelectedSensorPosition(RobotMap.Elevator.Position.groundOffsetInCounts, 0, 0);
 	}
 
 

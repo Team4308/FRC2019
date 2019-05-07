@@ -1,4 +1,4 @@
-package frc.robot.motionprofiling.profiles;
+package frc.robot.motionprofiling.profiles.old;
 import frc.robot.motionprofiling.GeneratedMotionProfile;public class ForwardMP implements GeneratedMotionProfile {
     public int kNumPoints() {return kNumPoints;}
     public double kTimeStep() {return kTimeStep;}

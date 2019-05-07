@@ -20,7 +20,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.subsystems.HatchGrabber;
+import frc.robot.auto.Auto;
 import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -35,6 +37,7 @@ import frc.robot.subsystems.sensors.Gyroscope;
  * project.
  */
 public class Robot extends TimedRobot {
+
   public static PowerDistributionPanel pdp;
   public static Compressor compressor;
 
@@ -43,6 +46,7 @@ public class Robot extends TimedRobot {
   public static Intake intake;
   public static Arm arm;
   public static HatchGrabber hatchGrabber;
+  public static Climber climber;
 
   public static Gyroscope gyro;
   // public static UltrasonicSensor ultrasonic;
@@ -50,6 +54,7 @@ public class Robot extends TimedRobot {
 
   public static OI oi;
   public static Logger logger;
+  public static Auto auto;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -69,6 +74,7 @@ public class Robot extends TimedRobot {
     intake = new Intake();
     arm = new Arm();
     hatchGrabber = new HatchGrabber();
+    climber = new Climber();
 
     gyro = new Gyroscope();
     // ultrasonic = new UltrasonicSensor();
@@ -76,25 +82,32 @@ public class Robot extends TimedRobot {
 
     oi = new OI();
     logger = new Logger();
+    auto = new Auto();
+
+    // new Thread(() -> {
+    //   UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    //   camera.setResolution(320, 180); 
+      
+    //   CvSink cvSink = CameraServer.getInstance().getVideo();
+    //   CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 320, 180);
+      
+    //   Mat source = new Mat();
+    //   Mat output = new Mat();
+      
+    //   while(!Thread.interrupted()) {
+    //     if (CameraServer.getInstance() != null) {
+    //       cvSink.grabFrame(source);
+    //       if (!source.empty()) {
+    //         Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+    //         outputStream.putFrame(output);
+    //       }
+    //     }
+    //   }
+    // }).start();
 
     new Thread(() -> {
-      UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-      camera.setResolution(320, 180);
-      
-      CvSink cvSink = CameraServer.getInstance().getVideo();
-      CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 320, 180);
-      
-      Mat source = new Mat();
-      Mat output = new Mat();
-      
       while(!Thread.interrupted()) {
-        if (CameraServer.getInstance() != null) {
-          cvSink.grabFrame(source);
-          if (!source.empty()) {
-            Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-            outputStream.putFrame(output);
-          }
-        }
+        logger.log();
       }
     }).start();
 
@@ -108,10 +121,14 @@ public class Robot extends TimedRobot {
    * <p>This runs after the mode specific periodic functions, but before
    * LiveWindow and SmartDashboard integrated updating.
    */
+  @Override 
+  public void disabledInit() {
+    drive.setDrive(0.0, 0.0);
+  }
+
   @Override
   public void robotPeriodic() {
-    logger.log();
-    gyro.gyroControl();
+    // gyro.gyroControl();
   }
 
   @Override
@@ -121,7 +138,7 @@ public class Robot extends TimedRobot {
     
   }
 
-  /**
+  /*
    * This function is called periodically during autonomous.
    */
   @Override
@@ -132,7 +149,6 @@ public class Robot extends TimedRobot {
     arm.armControl();
 
     Scheduler.getInstance().run();
-    // auto.periodicAuto();
   }
 
 
@@ -141,7 +157,7 @@ public class Robot extends TimedRobot {
     
   }
 
-  /**
+  /*
    * This function is called periodically during operator control.
    */
   @Override
@@ -160,6 +176,12 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
     
+    drive.driveControl();
+    elevator.elevatorControl();
+    intake.intakeControl();
+    arm.armControl();
+
+    Scheduler.getInstance().run();
   }
 
 }

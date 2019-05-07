@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -32,33 +34,40 @@ public class Arm extends Subsystem {
 
     armMotor.configFactoryDefault();
 
-    armMotor.configOpenloopRamp(RobotMap.Elevator.Power.kOpenloopRamp, 0);
-    armMotor.configContinuousCurrentLimit(RobotMap.Elevator.Power.kContinuousCurrentLimit, 0); // 10
-    armMotor.configPeakCurrentLimit(RobotMap.Elevator.Power.kPeakCurrentLimit, 0);  // 15
-    armMotor.configPeakCurrentDuration(RobotMap.Elevator.Power.kPeakDuration, 0);
+    armMotor.configOpenloopRamp(RobotMap.Arm.Power.kOpenloopRamp, 0);
+    armMotor.configContinuousCurrentLimit(RobotMap.Arm.Power.kContinuousCurrentLimit, 0); // 10
+    armMotor.configPeakCurrentLimit(RobotMap.Arm.Power.kPeakCurrentLimit, 0);  // 15
+    armMotor.configPeakCurrentDuration(RobotMap.Arm.Power.kPeakDuration, 0);
     armMotor.enableCurrentLimit(true);
 
     armMotor.setInverted(false);
     
     armMotor.setNeutralMode(NeutralMode.Brake);
 
-    armMotor.configNeutralDeadband(RobotMap.Elevator.Speed.kDeadband);
+    armMotor.configNeutralDeadband(RobotMap.Arm.Speed.kDeadband);
 
     stopMoving();
 
     armMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-    armMotor.setSensorPhase(false); 
+    armMotor.setSensorPhase(true); 
     
-		armMotor.config_kF(0, RobotMap.Elevator.MotionControl.kFeedForward, RobotMap.Elevator.MotionControl.kTimeoutMs);
-		armMotor.config_kP(0, RobotMap.Elevator.MotionControl.kP, RobotMap.Elevator.MotionControl.kTimeoutMs);
-		armMotor.config_kI(0, RobotMap.Elevator.MotionControl.kI, RobotMap.Elevator.MotionControl.kTimeoutMs);
-		armMotor.config_kD(0, RobotMap.Elevator.MotionControl.kD, RobotMap.Elevator.MotionControl.kTimeoutMs);
-		armMotor.configMotionProfileTrajectoryPeriod(RobotMap.Elevator.MotionControl.kTrajectoryPeriod, RobotMap.Elevator.MotionControl.kTimeoutMs); 
+		armMotor.config_kF(0, RobotMap.Arm.MotionControl.kFeedForward, RobotMap.Arm.MotionControl.kTimeoutMs);
+		armMotor.config_kP(0, RobotMap.Arm.MotionControl.kP, RobotMap.Arm.MotionControl.kTimeoutMs);
+		armMotor.config_kI(0, RobotMap.Arm.MotionControl.kI, RobotMap.Arm.MotionControl.kTimeoutMs);
+		armMotor.config_kD(0, RobotMap.Arm.MotionControl.kD, RobotMap.Arm.MotionControl.kTimeoutMs);
+		armMotor.configMotionProfileTrajectoryPeriod(RobotMap.Arm.MotionControl.kTrajectoryPeriod, RobotMap.Arm.MotionControl.kTimeoutMs); 
 
     armMotor.configMotionCruiseVelocity(RobotMap.Elevator.MotionControl.kCruiseVelocity, RobotMap.Elevator.MotionControl.kTimeoutMs);
     armMotor.configMotionAcceleration(RobotMap.Elevator.MotionControl.kAcceleration, RobotMap.Elevator.MotionControl.kTimeoutMs);
 
+    armMotor.configForwardSoftLimitEnable(false);
+    armMotor.configReverseSoftLimitEnable(false);
+    armMotor.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+    armMotor.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+
     resetSensors();
+
+    motionMagicMode = false;
 
   }
 
@@ -71,21 +80,21 @@ public class Arm extends Subsystem {
 
     double operatorInput = OI.getArmScheme();
 
-    // if (Math.abs(operatorInput) > 0) {
-    //   motionMagicMode = false;
-    // }
+    if (Math.abs(operatorInput) > 0) {
+      motionMagicMode = false;
+    }
 
-    // if (motionMagicMode) {
-    //   armMotor.set(ControlMode.MotionMagic, currentTargetPosition);
-    // }
-    // else {
+    if (motionMagicMode) {
+      armMotor.set(ControlMode.MotionMagic, currentTargetPosition);
+    }
+    else {
       if (Math.abs(operatorInput) > 0) {
         armMotor.set(ControlMode.PercentOutput, operatorInput);
       }
       else {
         armMotor.set(ControlMode.PercentOutput, RobotMap.Arm.Speed.kBrake);
       }
-    // }
+    }
     
   }
 

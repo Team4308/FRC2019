@@ -23,7 +23,7 @@ public class RobotMap {
 
 	public static class Control {
 
-		public static final double kInputDeadband = 0.065;
+		public static final double kInputDeadband = 0.08;
 
 		public static final int driveStick = 0;
 		public static final int controlStick = 1;
@@ -82,32 +82,35 @@ public class RobotMap {
 
 			public static final double kWheelDiameter = 8.4; // inches
 			public static final double kInchesPerRotation = 26.5;
-			public static final double kSensorUnitsPerRotation = 1024; // Practice is 512
-			public static final double kEncoderInchesPerCount = kInchesPerRotation/kSensorUnitsPerRotation;
+			public static final double kSensorUnitsPerRotation = 1024; // Practice is 512 
+			public static final double kEncoderInchesPerCount = kWheelDiameter*Math.PI/kSensorUnitsPerRotation;
 
 			public static final int kBaseTrajectoryPeriod = 0; // Base to add
 			public static final int kTrajectoryPeriod = 10; // Motion profile traj period on init
 			public static final int kTimeoutMs = 30;
 
-			public static final double kLeftFeedForward = 2.4; // (0.24) 1023/422 -> 422u/100ms max velocity
-			public static final double kLeftP = 2.4;
-			public static final double kLeftI = 0.0;
-			public static final double kLeftD = 24.0;
-			public static final double kRightFeedForward = 2.4; // 1023/404 -> 404u/100ms max velocity
-			public static final double kRightP = 2.4;
-			public static final double kRightI = 0.0;
-			public static final double kRightD = 24.0;
+			// comp - left - 810u
+			// comp - right - 780u
 
-			public static final double kExtraTime = 4.0;  // 0.75
+			public static final double kLeftFeedForward = 1.27; // (0.24) 1023/422 -> 422u/100ms max velocity
+			public static final double kLeftP = 0.0; // 2.4
+			public static final double kLeftI = 0.0;
+			public static final double kLeftD = 5.0; // 24.0
+			public static final double kRightFeedForward = 1.31; // 1023/404 -> 404u/100ms max velocity * 2u for comp
+			public static final double kRightP = 0.0; // 2.4
+			public static final double kRightI = 0.0;
+			public static final double kRightD = 5.0; // 24.0
+
+			public static final double kExtraTime = 1.0;  // 0.75
 			
 		}
 
 		public static class Pathfinder {
 
 			public static final double kWheelDiameter = 8.4; // inches
-			public static final double kTimeStep = 0.010; // 10 ms
+			public static final double kTimeStep = 0.050; // 10 ms
 			public static final double kMaxVelocity = 8; // ft/s
-			public static final double kMaxAcceleration = 10; // ft/s/s
+			public static final double kMaxAcceleration = 6; // ft/s/s
 			public static final double kMaxJerk = 30; // ft/s/s/s
 			public static final double kWheelBase = 2.4; // ft
 
@@ -132,9 +135,10 @@ public class RobotMap {
 
 		public static class Position {
 
+			public static final int groundOffsetInCounts = 100;
 			public static final double ground = 0.0;
-			public static final double depot = 1.25;
-			public static final double cargoShip = 29.0;
+			public static final double ball = 7.0;
+			public static final double cargoShip = 30.0;
 			public static final double rocketPort = 19.5;
 
 		}
@@ -178,7 +182,7 @@ public class RobotMap {
 		public static class Speed {
 
 			public static final double kDeadband = 0.01;
-			public static final double kBrake = 0.06;
+			public static final double kBrake = -0.1;
 			public static final double kOffsetInput = -0.09;
 			public static final double kSpeedNormal = 1.0;
 			public static final double kSpeedSlow = 0.42;
@@ -207,13 +211,13 @@ public class RobotMap {
 			public static final double kDrivenGearTeeth = 72; // inches
 			public static final double kGearReduction = kDrivenGearTeeth/kDrivingGearTeeth;
 			public static final double kSensorUnitsPerRotation = 4096; 
-			public static final double kEncoderDegreesPerCount = 360*kSensorUnitsPerRotation/kGearReduction;
+			public static final double kEncoderDegreesPerCount = 360/kSensorUnitsPerRotation/kGearReduction;
 
 			public static final int kBaseTrajectoryPeriod = 0; // Base to add
 			public static final int kTrajectoryPeriod = 10; // Motion profile traj period on init
 			public static final int kTimeoutMs = 30;
 
-			public static final double kFeedForward = 0.5115;
+			public static final double kFeedForward = 0.3;
 			public static final double kP = 1.0;
 			public static final double kI = 0.0;
 			public static final double kD = 0.4;
@@ -252,8 +256,17 @@ public class RobotMap {
 		
 		public static final int solenoidClawIn = 4;
 		public static final int solenoidClawOut = 0;
-		public static final int solenoidPusherIn = 1;
-		public static final int solenoidPusherOut = 5;
+		public static final int solenoidPusherIn = 5;
+		public static final int solenoidPusherOut = 1;
+
+	}
+
+	public static class Climber {
+
+		public static final int solenoidLeftClimberIn = 2;
+		public static final int solenoidLeftClimberOut = 6;
+		public static final int solenoidRightClimberIn = 3;
+		public static final int solenoidRightClimberOut = 7;
 
 	}
 
@@ -292,7 +305,7 @@ public class RobotMap {
 
 		public static class Elevator {
 
-			public static final int leftElevator = 12;
+			public static final int leftElevator = 4;
 			public static final int rightElevator = 3;
 
 		}
@@ -300,6 +313,12 @@ public class RobotMap {
 		public static class Intake {
 
 			public static final int intakeMotor = 11;
+
+		}
+
+		public static class Arm {
+
+			public static final int armMotor = 12;
 
 		}
 
