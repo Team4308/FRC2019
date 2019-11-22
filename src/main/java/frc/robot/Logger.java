@@ -30,8 +30,8 @@ public class Logger {
         SmartDashboard.putNumber("Left Drive Output", Robot.drive.getDriveLeft());
         SmartDashboard.putNumber("Right Drive Output", Robot.drive.getDriveRight());
 
-        // SmartDashboard.putNumber("Elevator Input", OI.getElevatorScheme());
-        // SmartDashboard.putNumber("Elevator Output", Robot.elevator.getElevator());
+        SmartDashboard.putNumber("Elevator Input", OI.getElevatorScheme());
+        SmartDashboard.putNumber("Elevator Output", Robot.elevator.getElevator());
 
         SmartDashboard.putNumber("Current - Front Left Motor", Robot.pdp.getCurrent(RobotMap.Power.Drive.frontLeft));
         SmartDashboard.putNumber("Current - Back Left Motor", Robot.pdp.getCurrent(RobotMap.Power.Drive.backLeft));
@@ -49,17 +49,17 @@ public class Logger {
         // SmartDashboard.putNumber("Left Drive Velocity", Robot.drive.getLeftSensorVelocity());
         // SmartDashboard.putNumber("Right Drive Velocity", Robot.drive.getRightSensorVelocity());
 
-        // SmartDashboard.putNumber("Elevator Position", Robot.elevator.getSensorPosition());
-        // SmartDashboard.putNumber("Elevator Position (Inches)", Robot.elevator.getSensorPositionInInches());
-        // SmartDashboard.putNumber("Elevator Target Position", Robot.elevator.getTargetPosition());
-        // SmartDashboard.putNumber("Elevator Target Position (Inches)", Robot.elevator.getTargetPositionInInches());
+        SmartDashboard.putNumber("Elevator Position", Robot.elevator.getSensorPosition());
+        SmartDashboard.putNumber("Elevator Position (Inches)", Robot.elevator.getSensorPositionInInches());
+        SmartDashboard.putNumber("Elevator Target Position", Robot.elevator.getTargetPosition());
+        SmartDashboard.putNumber("Elevator Target Position (Inches)", Robot.elevator.getTargetPositionInInches());
 
         // SmartDashboard.putNumber("Arm Position", Robot.arm.getSensorPosition());
         // SmartDashboard.putNumber("Arm Position (Inches)", Robot.arm.getSensorPositionInDegrees());
         // SmartDashboard.putNumber("Arm Target Position", Robot.arm.getTargetPosition());
         // SmartDashboard.putNumber("Arm Target Position (Inches)", Robot.arm.getTargetPositionInDegrees());
 
-        // SmartDashboard.putNumber("Elevator Velocity", Robot.elevator.getSensorVelocity());
+        SmartDashboard.putNumber("Elevator Velocity", Robot.elevator.getSensorVelocity());
 
         // SmartDashboard.putNumber("Gyro Angle", Robot.gyro.getAngle());
 

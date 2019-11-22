@@ -37,6 +37,8 @@ public class Elevator extends Subsystem {
     rightElevator = new TalonSRX(RobotMap.Elevator.right);
     elevatorMotors.add(rightElevator);
 
+    leftElevator.setSensorPhase(false); 
+
     for(TalonSRX talon : elevatorMotors) {
 
       talon.configFactoryDefault();
@@ -47,7 +49,7 @@ public class Elevator extends Subsystem {
       talon.configPeakCurrentDuration(RobotMap.Elevator.Power.kPeakDuration, 0);
       talon.enableCurrentLimit(true);
 
-      talon.setInverted(false);
+      talon.setInverted(true);
       
       talon.setNeutralMode(NeutralMode.Brake);
 
@@ -55,12 +57,12 @@ public class Elevator extends Subsystem {
     }
 
     rightElevator.follow(leftElevator);
-    rightElevator.setInverted(true);
+    rightElevator.setInverted(false);
 
     stopMoving();
 
     leftElevator.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-    leftElevator.setSensorPhase(false); 
+    
     
 		leftElevator.config_kF(0, RobotMap.Elevator.MotionControl.kFeedForward, RobotMap.Elevator.MotionControl.kTimeoutMs);
 		leftElevator.config_kP(0, RobotMap.Elevator.MotionControl.kP, RobotMap.Elevator.MotionControl.kTimeoutMs);
@@ -70,6 +72,12 @@ public class Elevator extends Subsystem {
 
     leftElevator.configMotionCruiseVelocity(RobotMap.Elevator.MotionControl.kCruiseVelocity, RobotMap.Elevator.MotionControl.kTimeoutMs);
     leftElevator.configMotionAcceleration(RobotMap.Elevator.MotionControl.kAcceleration, RobotMap.Elevator.MotionControl.kTimeoutMs);
+
+    leftElevator.configReverseSoftLimitThreshold(375);
+    leftElevator.configForwardSoftLimitThreshold(27375);
+
+    leftElevator.configForwardSoftLimitEnable(true);
+    leftElevator.configReverseSoftLimitEnable(true);
 
     resetSensors();
 
@@ -113,7 +121,7 @@ public class Elevator extends Subsystem {
   }
 
   public void setTargetPosition(double targetPosInInches) {
-    currentTargetPosition = -targetPosInInches/RobotMap.Elevator.MotionControl.kEncoderInchesPerCount;
+    currentTargetPosition = targetPosInInches/RobotMap.Elevator.MotionControl.kEncoderInchesPerCount;
     motionMagicMode = true;
   }
 

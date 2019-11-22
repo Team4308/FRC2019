@@ -9,12 +9,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.POVButton;
 import frc.robot.auto.FR_RS;
 import frc.robot.commands.ActuateClaw;
 import frc.robot.commands.ActuateClimber;
 import frc.robot.commands.ActuatePusher;
 import frc.robot.commands.BeginClimb;
+import frc.robot.commands.DisableReverseDrive;
 import frc.robot.commands.EnableClimb;
+import frc.robot.commands.EnableReverseDrive;
 import frc.robot.commands.GetLog;
 import frc.robot.commands.ResetSensors;
 import frc.robot.commands.SetArmPosition;
@@ -51,6 +54,11 @@ public class OI {
 	private JoystickButton B2;
 	private JoystickButton X2;
 	private JoystickButton Y2;
+
+	private POVButton DUp;
+	private POVButton DLeft;
+	private POVButton DDown;
+	private POVButton DRight;
 	
 	private JoystickButton LB2;
 	private JoystickButton RB2;
@@ -71,18 +79,21 @@ public class OI {
 		LB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.leftBumper);
 		RB1 = new JoystickButton(driveStick, RobotMap.Control.Standard.rightBumper);
 
+		LB1.whenPressed(new DisableReverseDrive());
+		RB1.whenPressed(new EnableReverseDrive());
+
 		Start1 = new JoystickButton(driveStick, RobotMap.Control.Standard.start);
 		Back1 = new JoystickButton(driveStick, RobotMap.Control.Standard.back);
 
-		A1.whenPressed(new ActuateClaw(ClawAction.RELEASE));
-		X1.whenPressed(new ActuateClaw(ClawAction.GRAB));
-		Y1.whenPressed(new ActuatePusher(PusherAction.PUSH));
-		B1.whenPressed(new ActuatePusher(PusherAction.PULL));
+		// B1.whenPressed(new ActuateClaw(ClawAction.RELEASE));
+		// X1.whenPressed(new ActuateClaw(ClawAction.GRAB));
+		// Y1.whenPressed(new ActuatePusher(PusherAction.PUSH));
+		// A1.whenPressed(new ActuatePusher(PusherAction.PULL));
 
 		LB1.whenPressed(new ActuateClimber(ClimberAction.PUSH));
 		RB1.whenPressed(new ActuateClimber(ClimberAction.PULL));
 
-		Start1.whenPressed(new BeginClimb());
+		//Start1.whenPressed(new BeginClimb());
 
 		Back1.whenPressed(new ResetSensors());
 	
@@ -90,6 +101,11 @@ public class OI {
 		B2 = new JoystickButton(controlStick, RobotMap.Control.Standard.b);
 		X2 = new JoystickButton(controlStick, RobotMap.Control.Standard.x);
 		Y2 = new JoystickButton(controlStick, RobotMap.Control.Standard.y);
+
+		DUp = new POVButton(controlStick, 0);
+		DRight = new POVButton(controlStick, 90);
+		DDown = new POVButton(controlStick, 180);
+		DLeft = new POVButton(controlStick, 270);
 	
 		LB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.leftBumper);
 		RB2 = new JoystickButton(controlStick, RobotMap.Control.Standard.rightBumper);
@@ -102,15 +118,20 @@ public class OI {
 		// Y2.whenPressed(new SetBallManipulatorPosition(RobotMap.Elevator.Position.rocketPort, RobotMap.Arm.Position.up));
 		// B2.whenPressed(new SetBallManipulatorPosition(RobotMap.Elevator.Position.cargoShip, RobotMap.Arm.Position.up));
 
-		A2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.ground));
-		X2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.ball));
-		Y2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.rocketPort));
-		B2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.cargoShip));
+		// A2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.ground));
+		// X2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.ball));
+		// Y2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.rocketPort));
+		// B2.whenPressed(new SetElevatorPosition(RobotMap.Elevator.Position.cargoShip));
+
+		DRight.whenPressed(new ActuateClaw(ClawAction.RELEASE));
+		DLeft.whenPressed(new ActuateClaw(ClawAction.GRAB));
+		DUp.whenPressed(new ActuatePusher(PusherAction.PUSH));
+		DDown.whenPressed(new ActuatePusher(PusherAction.PULL));
 
 		LB2.whenPressed(new FR_RS());
 		RB2.whenPressed(new FR_RS());
 		
-		Start2.whenPressed(new EnableClimb(false));
+		//Start2.whenPressed(new EnableClimb(false));
 
 		Back2.whenPressed(new ResetSensors());
 		
@@ -141,11 +162,23 @@ public class OI {
 		// } else {
 		// 	leftY = leftY*leftY;
 		// }
+		
+		// Squared
+		// if (rightX <= 0) {
+		// 	rightX = -(rightX*rightX);
+		// } else {
+		// 	rightX = rightX*rightX;
+		// }
 
-		if (rightX <= 0) {
-			rightX = -(rightX*rightX);
-		} else {
-			rightX = (rightX*rightX);
+		//xlogx
+		// if (rightX <= 0) {
+		// 	rightX = -(rightX*Math.log(rightX));
+		// } else {
+		// 	rightX = rightX*Math.log(rightX);
+		// }
+
+		if (Robot.drive.reverseDrive) {
+			leftY = -leftY;
 		}
 		
 		
@@ -166,10 +199,22 @@ public class OI {
 		// 	leftY = leftY*leftY;
 		// }
 
-		if (rightX <= 0) {
-			rightX = -(rightX*rightX);
-		} else {
-			rightX = (rightX*rightX);
+		// Squared
+		// if (rightX <= 0) {
+		// 	rightX = -(rightX*rightX);
+		// } else {
+		// 	rightX = rightX*rightX;
+		// }
+
+		//xlogx
+		// if (rightX <= 0) {
+		// 	rightX = -(rightX*Math.log(rightX));
+		// } else {
+		// 	rightX = rightX*Math.log(rightX);
+		// }
+
+		if (Robot.drive.reverseDrive) {
+			leftY = -leftY;
 		}
 		
 		return normalized(leftY - rightX);
@@ -190,7 +235,7 @@ public class OI {
 			output -= RobotMap.Elevator.Speed.kOffsetInput;
 		}
 
-		return normalized(output);
+		return normalized(-output);
 
 	}
 

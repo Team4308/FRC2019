@@ -29,6 +29,8 @@ public class Drivetrain extends Subsystem {
 
   private boolean motionProfileMode = false;
 
+  public boolean reverseDrive = false;
+
 
   public Drivetrain() {
 

@@ -23,7 +23,7 @@ public class RobotMap {
 
 	public static class Control {
 
-		public static final double kInputDeadband = 0.08;
+		public static final double kInputDeadband = 0.09;
 
 		public static final int driveStick = 0;
 		public static final int controlStick = 1;
@@ -138,7 +138,7 @@ public class RobotMap {
 			public static final int groundOffsetInCounts = 100;
 			public static final double ground = 0.0;
 			public static final double ball = 7.0;
-			public static final double cargoShip = 30.0;
+			public static final double cargoShip = 30.02;
 			public static final double rocketPort = 19.5;
 
 		}
@@ -146,16 +146,16 @@ public class RobotMap {
 		public static class Power {
 
 			public static final int kOpenloopRamp = 0;
-			public static final int kContinuousCurrentLimit = 15;
-			public static final int kPeakCurrentLimit = 15;
-			public static final int kPeakDuration = 100; 
+			public static final int kContinuousCurrentLimit = 10;
+			public static final int kPeakCurrentLimit = 10;
+			public static final int kPeakDuration = 0; 
 
 		}
 
 		public static class MotionControl {
 
-			public static final double kSprocketTeeth = 16; // teeth
-			public static final double kChainPitch = 0.25; // inches
+			public static final double kSprocketTeeth = 12; // teeth
+			public static final double kChainPitch = 0.375; // inches
 			public static final double kSensorUnitsPerRotation = 4096; 
 			public static final double kEncoderInchesPerCount = kSprocketTeeth * kChainPitch/kSensorUnitsPerRotation;
 
